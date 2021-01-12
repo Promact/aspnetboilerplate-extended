@@ -13,6 +13,8 @@ namespace BoilerPlateDemo_App
         public override void PreInitialize()
         {
             Configuration.Authorization.Providers.Add<BoilerPlateDemo_AppAuthorizationProvider>();
+            Configuration.Modules.AbpAutoMapper().Configurators.Add(CustomDtoMapper.CreateMappings);
+
         }
 
         public override void Initialize()
@@ -25,6 +27,8 @@ namespace BoilerPlateDemo_App
                 // Scan the assembly for classes which inherit from AutoMapper.Profile
                 cfg => cfg.AddMaps(thisAssembly)
             );
+
+           
         }
     }
 }

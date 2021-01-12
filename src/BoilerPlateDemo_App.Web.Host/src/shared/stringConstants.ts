@@ -17,4 +17,17 @@ export class StringConstants {
     applicationEditPermission = 'Pages.Applications.Edit';
     applicationDeletePermission = 'Pages.Applications.Delete';
     applicationViewPermission = 'Pages.Applications.View';
+    applicationSaveMessage = 'Application Saved successfully';
+    applicationAddMessage = 'Application Name created successfully';
+    applicationEditMessage = 'Application Name updated successfully';
+
+    // masters
+
+    norecoredFoundMessaage = "No record found";
+    fileDownloadPath = '/File/DownloadTempFile?fileType=';
+    toasterMEssage = "Toster Message";
+    applicationSelectedRoute = '/masters/applications';
+    deleteWarningMessage = ' Are you sure you want to delete this?';
+    applicationDeleteMessage = 'Application Name deleted successfully';
+
 }

@@ -23,6 +23,9 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
   constructor(injector: Injector, private router: Router) {
     super(injector);
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+  };
     this.router.events.subscribe(this.routerEvents);
   }
 
@@ -61,6 +64,19 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
         '/app/roles',
         'fas fa-theater-masks',
         'Pages.Roles'
+      ),
+      
+      new MenuItem(
+        this.l('Application'),
+        '',
+        'fab fa-adn','',[
+        new MenuItem(
+          this.l('ApplicationName'),
+          '/app/application/0',
+          'fab fa-adn',
+         
+        ),]
+       
       ),
       new MenuItem(this.l('About'), '/app/about', 'fas fa-info-circle'),
       new MenuItem(this.l('MultiLevelMenu'), '', 'fas fa-circle', '', [

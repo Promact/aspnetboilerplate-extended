@@ -250,3 +250,5 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/6.0.0/src/BoilerPlateDemo_App.Web.Host/package-lock.json
+/6.0.0/package-lock.json

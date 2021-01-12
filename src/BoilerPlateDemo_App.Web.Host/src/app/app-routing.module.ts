@@ -8,6 +8,8 @@ import { UsersComponent } from './users/users.component';
 import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
+import { ApplicationMasterComponent } from './application-master/application-master.component';
+import {ErrorPageComponent} from '../app/error-page/error-page.component'
 import { UpdateUserDetailsComponent } from './update-user-details/update-user-details.component';
 
 @NgModule({
@@ -23,7 +25,9 @@ import { UpdateUserDetailsComponent } from './update-user-details/update-user-de
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'about', component: AboutComponent },
                     { path: 'update-password', component: ChangePasswordComponent },
-                    { path: 'update-details', component: UpdateUserDetailsComponent },
+                    {path:'application/:id',component:ApplicationMasterComponent},
+                    { path: '404', component: ErrorPageComponent },
+                    { path: 'update-details', component: UpdateUserDetailsComponent }
                 ]
             }
         ])

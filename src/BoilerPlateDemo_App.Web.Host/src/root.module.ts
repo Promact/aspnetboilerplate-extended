@@ -30,8 +30,8 @@ export function getCurrentLanguage(): string {
 
 @NgModule({
   imports: [
-    BrowserModule,
     BrowserAnimationsModule,
+    BrowserModule,
     HttpClientModule,
     SharedModule.forRoot(),
     ModalModule.forRoot(),
@@ -57,5 +57,8 @@ export function getCurrentLanguage(): string {
     },
   ],
   bootstrap: [RootComponent],
+  
 })
-export class RootModule {}
+export class RootModule {
+
+}

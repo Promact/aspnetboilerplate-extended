@@ -1,0 +1,42 @@
+<!-- Application Section -->
+<section class="application-section">
+    <form class="form-horizontal"
+          autocomplete="off"
+          #createApplicationModal="ngForm"
+          (ngSubmit)="save()">
+        <abp-modal-header [title]="'Create New Application Name' | localize"
+                          (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+        <div class="modal-body">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group row required">
+                                <label class="col-md-5 col-form-label" for="app-name">
+                                    {{ "Application Name" | localize }}
+                                </label>
+                                <div class="col-md-7">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="name"
+                                           id="name"
+                                           required
+                                           minlength="2"
+                                           maxlength="10"
+                                           placeholder="Enter Application Name"
+                                           [(ngModel)]="createApplication.applicationName"
+                                           #nameModel="ngModel"
+                                           #nameEl />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <abp-modal-footer [cancelDisabled]="saving"
+                          [saveDisabled]="!createApplicationModal.form.valid || saving"
+                          (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+    </form>
+</section>

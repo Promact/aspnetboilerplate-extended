@@ -38,9 +38,22 @@ import { SidebarComponent } from './layout/sidebar.component';
 import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
-import { UpdateUserDetailsComponent } from './update-user-details/update-user-details.component';
-import { UserUpdateDetailsServiceProxy } from '@shared/service-proxies/service-proxies';
+import {ApplicationMasterComponent} from '../app/application-master/application-master.component';
+import { ApplicationServiceProxy, UserUpdateDetailsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { StringConstants } from '@shared/stringConstants';
+//Tooltip
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+//Toaster
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+//ng-select
+import { NgSelectModule } from '@ng-select/ng-select';
+//ExcelfileDownloadService
+import {ExcelFileDownloadService} from '../shared/ExcelFileDownloadService/excel-file-download.service';
+import { UpdateUserDetailsComponent } from './update-user-details/update-user-details.component';
+import { ApplicationCreateMasterComponent } from './application-create-master/application-create-master.component';
+import { ApplicationEditMasterComponent } from './application-edit-master/application-edit-master.component';
+
+
 
 @NgModule({
   declarations: [
@@ -71,9 +84,14 @@ import { StringConstants } from '@shared/stringConstants';
     SidebarLogoComponent,
     SidebarUserPanelComponent,
     SidebarMenuComponent,
-    UpdateUserDetailsComponent
+    ApplicationMasterComponent,
+    UpdateUserDetailsComponent,
+    ApplicationCreateMasterComponent,
+    ApplicationEditMasterComponent
+    
   ],
   imports: [
+
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -87,8 +105,28 @@ import { StringConstants } from '@shared/stringConstants';
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,
+    //Tooltip
+    TooltipModule.forRoot(),
+    //Toaster
+    ToastrModule.forRoot({
+            timeOut: 3000,
+            positionClass: 'toast-top-right',
+            preventDuplicates: true,
+        }),
+    //ng-select
+    NgSelectModule,
+    
+
+  
+    
+  
+   
+    
+  
   ],
-  providers: [StringConstants,UserUpdateDetailsServiceProxy],
+  providers: [
+      ApplicationServiceProxy, StringConstants, ToastrService, ExcelFileDownloadService, UserUpdateDetailsServiceProxy],
+
   entryComponents: [
     // tenants
     CreateTenantDialogComponent,
