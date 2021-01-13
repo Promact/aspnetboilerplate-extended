@@ -14,5 +14,7 @@ namespace BoilerPlateDemo_App.Users
         Task ChangeLanguage(ChangeUserLanguageDto input);
 
         Task<bool> ChangePassword(ChangePasswordDto input);
+
+        Task<string> GetEmailOfUserForResetPassword(SendResetPasswordLinkDto sendResetPasswordLinkDto);
     }
 }

@@ -10,6 +10,7 @@ namespace BoilerPlateDemo_App.Authorization.Accounts
     {
         // from: http://regexlib.com/REDetails.aspx?regexp_id=1923
         public const string PasswordRegex = "(?=^.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s)[0-9a-zA-Z!@#$%^&*()]*$";
+        public const string EmailRegex = "^[a-z0-9][-a-z0-9.!#$%&'*+-=?^_`{|}~\\/]+@([-a-z0-9]+\\.)+[a-z]{2,5}$";
 
         private readonly UserRegistrationManager _userRegistrationManager;
 

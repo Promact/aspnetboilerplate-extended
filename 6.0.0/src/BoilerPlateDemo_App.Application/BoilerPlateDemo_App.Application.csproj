@@ -11,6 +11,10 @@
     <RootNamespace>BoilerPlateDemo_App</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.10.1" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\BoilerPlateDemo_App.Core\BoilerPlateDemo_App.Core.csproj" />
+    <ProjectReference Include="..\BoilerPlateDemo_App.EntityFrameworkCore\BoilerPlateDemo_App.EntityFrameworkCore.csproj" />
   </ItemGroup>
 </Project>
