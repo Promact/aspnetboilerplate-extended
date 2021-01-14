@@ -180,7 +180,7 @@
                   class="custom-control-input"
                   [id]="'role_' + i"
                   [checked]="isRoleChecked(role.normalizedName)"
-                  (change)="onRoleChange(role, $event)"
+                  (change)="onRoleChange(role, $event)" 
                 />
                 <label class="custom-control-label" [for]="'role_' + i">
                   {{ role.name }}

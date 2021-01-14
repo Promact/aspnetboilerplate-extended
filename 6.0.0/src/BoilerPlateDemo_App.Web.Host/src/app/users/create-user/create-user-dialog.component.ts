@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { forEach as _forEach, map as _map } from 'lodash-es';
+import { forEach as _forEach, map as _map, includes as _includes } from 'lodash-es';
 import { AppComponentBase } from '@shared/app-component-base';
 import {
   UserServiceProxy,
@@ -41,7 +41,7 @@ export class CreateUserDialogComponent extends AppComponentBase
   ];
 
   @Output() onSave = new EventEmitter<any>();
-
+   
   constructor(
     injector: Injector,
     public _userService: UserServiceProxy,
@@ -70,7 +70,8 @@ export class CreateUserDialogComponent extends AppComponentBase
   isRoleChecked(normalizedName: string): boolean {
     // just return default role checked status
     // it's better to use a setting
-    return this.defaultRoleCheckedStatus;
+    //return this.defaultRoleCheckedStatus;
+      return _includes(this.user.roleNames, normalizedName);
   }
 
   onRoleChange(role: RoleDto, $event) {
