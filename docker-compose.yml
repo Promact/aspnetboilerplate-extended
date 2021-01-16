@@ -1,0 +1,30 @@
+version: '5.0'
+
+services:
+
+  db:
+    image: postgres:12
+    restart: always
+    ports:
+      - 9898:5432
+    environment:
+      POSTGRES_PASSWORD: your_password
+    volumes:
+      - "/home/user/cet/postgres-data:/var/lib/postgresql/data"
+  app:
+    image: cet:tag
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - "/home/user/cet/temp-keys:/root/.aspnet/DataProtection-Keys"
+    environment:
+      ConnectionStrings__Default: ""
+      App__ServerRootAddress: ""
+      App__ClientRootAddress: ""
+      MailSetting__MailId: ""
+      MailSetting__Username: ""
+      MailSetting__Password: ""
+      MailSetting__Host: ""
+      MailSetting__Port: ""
+     
