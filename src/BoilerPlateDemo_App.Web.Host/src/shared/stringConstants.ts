@@ -8,5 +8,13 @@ export class StringConstants {
     passwordUpdateSuccessMessage2="please click";
     passwordUpdateSuccessMessage3="to log in.";
     loginlink="/account/login";
-    forgotRoute="/account/forgot-password"
+    forgotRoute = "/account/forgot-password"
+    //Parent Permissions
+    applicationPermission = "Pages.Applications";
+
+    //Child permission
+    applicationCreatePermission = 'Pages.Applications.Create';
+    applicationEditPermission = 'Pages.Applications.Edit';
+    applicationDeletePermission = 'Pages.Applications.Delete';
+    applicationViewPermission = 'Pages.Applications.View';
 }
