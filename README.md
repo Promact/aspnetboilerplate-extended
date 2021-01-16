@@ -1,37 +1,57 @@
-# Important
+# Update Basic User Details
 
-Issues of this repository are tracked on https://github.com/aspnetboilerplate/aspnetboilerplate. Please create your issues on https://github.com/aspnetboilerplate/aspnetboilerplate/issues.
+Generic Repository implementation for updating user basic details like Name,Surname,Email,UserName etc in Application Project.
 
-# Introduction
+Create a Dto and Extend it from `EntityDto<long>` which will take Id property as long and add other required fields in it.
+```
+public class UserUpdateDetailDto : EntityDto<long>
+    {
+        [Required(ErrorMessage = "The Name field is required.")]
+        [StringLength(AbpUserBase.MaxNameLength)]
+        public string Name { get; set; }
 
-This is a template to create **ASP.NET Core MVC / Angular** based startup projects for [ASP.NET Boilerplate](https://aspnetboilerplate.com/Pages/Documents). It has 2 different versions:
+        [Required(ErrorMessage = "The Surname field is required.")]
+        [StringLength(AbpUserBase.MaxSurnameLength)]
+        public string Surname { get; set; }
 
-1. [ASP.NET Core MVC & jQuery](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core) (server rendered multi-page application).
-2. [ASP.NET Core & Angular](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Angular) (single page application).
- 
-User Interface is based on [AdminLTE theme](https://github.com/ColorlibHQ/AdminLTE).
- 
-# Download
+        [Required(ErrorMessage = "The UserName field is required.")]
+        [StringLength(AbpUserBase.MaxUserNameLength)]
+        public string UserName { get; set; }
 
-Create & download your project from https://aspnetboilerplate.com/Templates
+        [Required(ErrorMessage = "The EmailAddress field is required.")]
+        [StringLength(AbpUserBase.MaxEmailAddressLength)]
+        public string EmailAddress { get; set; }
+    }
+```
 
-# Screenshots
+[GetUserDetailsAsync(string id)](https://github.com/Promact/aspnetboilerplate-extended/blob/master/6.0.0/src/BoilerPlateDemo_App.Application/User-Update-Details/UserUpdateDetailsAppService.cs#L22) method will return details of user with user id passed in it.
 
-#### Sample Dashboard Page
-![](_screenshots/module-zero-core-template-ui-home.png)
+User id can be fetched from [app-auth.service.ts](https://github.com/Promact/aspnetboilerplate-extended/blob/master/6.0.0/src/BoilerPlateDemo_App.Web.Host/src/shared/auth/app-auth.service.ts) file from authenticate method which return userId as Result and we can set it to localStorage.
 
-#### User Creation Modal
-![](_screenshots/module-zero-core-template-ui-user-create-modal.png)
+[UpdateUserDetails(UserUpdateDetailDto updateDetailDto)](https://github.com/Promact/aspnetboilerplate-extended/blob/master/6.0.0/src/BoilerPlateDemo_App.Application/User-Update-Details/UserUpdateDetailsAppService.cs#L55) methods update the details of user.
 
-#### Login Page
 
-![](_screenshots/module-zero-core-template-ui-login.png)
 
-# Documentation
+# Forgot Password 
 
-* [ASP.NET Core MVC & jQuery version.](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core)
-* [ASP.NET Core & Angular  version.](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Angular)
+[SendResetPasswordLink<T>(T input) where T : class](https://github.com/Promact/aspnetboilerplate-extended/blob/master/6.0.0/src/BoilerPlateDemo_App.Application/Users/UserAppService.cs#L101) Generic method takes email of user and checks if user exist or not, if exists then send the mail of changing password with link in the mail.
 
-# License
+For Email, Used package of Mailkit(`Install-Package MailKit` run this command in Package Manager Console).
 
-[MIT](LICENSE).
+[SendMail(string DisplayName, string emailSubject, string emailBody, string emailAddress)](https://github.com/Promact/aspnetboilerplate-extended/blob/master/6.0.0/src/BoilerPlateDemo_App.Application/Users/UserAppService.cs#L68) method send the mail on the basis of parametes passed in it.
+
+```
+"MailSetting": {
+    "Username": "",
+    "MailId": "",
+    "Password": "",
+    "Host": "smtp.gmail.com",
+    "Port": "587"
+  }
+```
+This are basic mail setting which uses google smtp service to send the mail.
+
+[ResetPasswordFromLink<T>(T input) where T : class](https://github.com/Promact/aspnetboilerplate-extended/blob/master/6.0.0/src/BoilerPlateDemo_App.Application/Users/UserAppService.cs#L159) Generic method takes New Password of user and updates it, so that user can log in to the tool.
+
+
+
