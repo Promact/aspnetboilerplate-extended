@@ -53,16 +53,7 @@
     <None Remove="external_libs\**" />
     <None Remove="node_modules\**" />
   </ItemGroup>
-  <Target Name="PrepublishScript" BeforeTargets="ComputeFilesToPublish">
-    <Exec Command="ng build --prod" />
-    <ItemGroup>
-      <DistFiles Include="wwwroot\**\*" />
-      <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
-        <RelativePath>%(DistFiles.Identity)</RelativePath>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      </ResolvedFileToPublish>
-    </ItemGroup>
-  </Target>
+  
   <PropertyGroup>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
