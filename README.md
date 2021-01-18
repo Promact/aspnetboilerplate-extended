@@ -215,51 +215,51 @@ For delete permission
 
 Toaster Message is very crucial to provide a User friendly interface. To add toaster message in project user has to follow certain steps which are as follows:
 
-Step-1:In this step, we will install ngx-toastr and @angular/animations npm packages. so let's run both command as like bellow:
-````
-npm install ngx-toastr --save
-npm install @angular/animations --save
-````
-Step-2:Now, we need to include toastr css like "node_modules/ngx-toastr/toastr.css", so let's add it on angular.json file.So Navigate to angular.json file add add following style path.
+- Step-1:In this step, we will install `ngx-toastr` and `@angular/animations` npm packages. so let's run both command as like bellow:
+    ````
+    npm install ngx-toastr --save
+    npm install @angular/animations --save
+    ````
+- Step-2:Now, we need to include toastr css like `"node_modules/ngx-toastr/toastr.css"`, so let's add it on [angular.json](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Web.Host/angular.json) file.So Navigate to angular.json file add add following style path.
 
-````
+    ````
     "styles": [
       "node_modules/ngx-toastr/toastr.css",
       "src/styles.css"
     ],
-````
-Step-3:In this step, we need to import ToastrModule and BrowserAnimationsModule to app.module.ts file. so let's import it as like bellow:
-````
-//Toaster
-import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+    ````
+    
+    - Step-3:In this step, we need to import ToastrModule and `BrowserAnimationsModule` to [app.module.ts](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Web.Host/src/app/app.module.ts) file. so let's import it as like bellow:
+    ````
+    //Toaster
+    import { ToastrModule } from 'ngx-toastr';
+    import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+    ````
+NOTE:If you have imported Browser animation module in any of your root components then dont import it again it will cause error.(ex=> We have imported browser animation in [rootmodule.ts](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Web.Host/src/root.module.ts) so no need to import it again in [app.module.ts](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Web.Host/src/app/app.module.ts).)
 
-````
-NOTE:If you have imported Browser animation module in any of your root components then dont import it again it will cause error.(ex=> We have imported browser animation in rootmodule.ts so no need to import it again in app module.)
 
-Step-4:Now Add Toaster Module in declaration of appmodule.ts,Here You can also provide timeout,position and many other display properties.
- ````
- //Toaster
+- Step-4:Now Add `Toaster Module` in `declaration` of  [app.module.ts](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Web.Host/src/app/app.module.ts),Here You can also provide timeout,position and many other display properties.
+    ````
+    //Toaster
     ToastrModule.forRoot({
             timeOut: 3000,
             positionClass: 'toast-top-right',
             preventDuplicates: true,
         }),
-````
+    ````
 
-Step-5:In this step We need to add Toaster service in Appmodule.ts Provider array.
-````
- providers: [
+- Step-5:In this step We need to add `Toaster service` in  [app.module.ts](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Web.Host/src/app/app.module.ts) Provider array.
+    ````
+    providers: [
       ToastrService],
- ````
+    ````
 
-Step-6:Now Inject this service in your component class constructor.
-````
- constructor(private toaster:ToastrService)
+- Step-6:Now Inject this service in your component class constructor.
+    ````
+    constructor(private toaster:ToastrService)
+    ````
 
-````
-
-Step-7:You are all set to use  toaster service to display notification or messages in a very attractive manner.we have used it in [ShowToaster()]method of [Application-master] Component
+- Step-7:You are all set to use  toaster service to display notification or messages in a very attractive manner.we have used it in `ShowToaster()`method of `Application-master` Component
 
 ````
 ShowToaster(){
@@ -271,7 +271,7 @@ ShowToaster(){
 NOTE:There are multiple options like Success,Error and many more you can use it as per requirement.
 
 # Converting Time From UTC to IST
-Geneally we use [DateTime.Now] property to set time instance to current time but sometimes it causes trouble to convert into IST due to time zone difference so Boiler Plate Provides [Abp.Timing] which generally solve this issue so rather using [DateTime.Now] use [Clock.Now] to store current time and use [ToLocalTime()] method to convert time into system time zone.
+Geneally we use `DateTime.Now` property to set time instance to current time but sometimes it causes trouble to convert into IST due to time zone difference so Boiler Plate Provides `Abp.Timing` which generally solve this issue so rather using `DateTime.Now` use `Clock.Now` to store current time and use `ToLocalTime()` method to convert time into system time zone.
 NOTE:Colck.Now is provided by Abp.Timing 
 ````
  new Project{
@@ -297,7 +297,7 @@ Step-2:Now, we need to include bootstrap css like ["node_modules/bootstrap/dist/
 
 ````
 
-Step-3:import [TooltipModule] in [AppModule.ts]  
+Step-3:import `TooltipModule` in `AppModule.ts`  
 ````
 //Tooltip
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -319,7 +319,7 @@ Step-1:Add 404 componenet using cli
 ng g c 404.component
 ````
 
-Step-2:Add boolean variable into component to map with the permission just like [isviewGranted] in [Application-master-component.ts] like below.
+Step-2:Add boolean variable into component to map with the permission just like `isviewGranted` in `Application-master-component.ts` like below.
 ````
  isCreateGranted = false;
  isEditGranted = false;
@@ -327,7 +327,7 @@ Step-2:Add boolean variable into component to map with the permission just like 
  isViewGranted = false;
 ````
 
-Step-3:Check the permission status using [abp.auth.isGranted()] method it will return boolean and chec for permission using condition statment and navigate to [404-component] if does not satisfy condition. for example
+Step-3:Check the permission status using `abp.auth.isGranted()` method it will return boolean and chec for permission using condition statment and navigate to `404-component` if does not satisfy condition. for example
 ````
 constructor(private _router:Router){
 
@@ -343,28 +343,25 @@ constructor(private _router:Router){
 }
 ````
 
-# Add seachable dropdown
-  [@ng-select/ng-select] library provides search functionality in drop downs to add [ngselect] in project follow step mentioned below:
+# Add searchable dropdown
+  `@ng-select/ng-select` library provides search functionality in drop downs to add `ngselect` in project follow step mentioned below:
 
-  Step-1:Install ng-select library using below command
+- Step-1:Install ng-select library using below command
   ````
   npm install --save @ng-select/ng-select
   ````
-
-  Step-2:Add ng-select in import section of [app.module.ts]
+- Step-2:Add ng-select in import section of `app.module.ts`
   ````
   //ng-select
   import { NgSelectModule } from '@ng-select/ng-select';
   imports:[NgSelectModule ]
   ````
-Step-3:Include theme to allow customization and theming, ng-select bundle includes only generic styles that are necessary for correct layout and positioning. To get full look of the control, include one of the themes in your application.Add style path in [angular.json].
-
+- Step-3:Include theme to allow customization and theming, ng-select bundle includes only generic styles that are necessary for correct layout and positioning. To get full look of the control, include one of the themes in your application.Add style path in `angular.json`.
 ````
 "styles":[ "node_modules/@ng-select/ng-select/themes/default.theme.css"]
 
 ````
-
-Step-4:Start usign [ng-select] in html file for Example.
+- Step-4:Start usign `ng-select` in html file for Example.
 ````
  <ng-select appendTo="body" [items]="projects" placeholder="Searchable DropDown" [(ngModel)]=" createApplication.projectId"  bindLabel="name" bindValue="id" name="projetcs">
      <ng-template ng-option-tmp let-item="item">
@@ -374,31 +371,35 @@ Step-4:Start usign [ng-select] in html file for Example.
 ````
 
 # ExportFileToExcel
-First of all install [DocumentFormat.OpenXml] package by running following command,then copy all the necessary files which will be used in export functionality.
+First of all install `DocumentFormat.OpenXml` package by running following command,then copy all the necessary files which will be used in export functionality.
 ````
 Install-Package DocumentFormat.OpenXml 
 ````
-Files to be copied:
-- copy [ExportToExcel] directory from [BoilerPlateDemo_App\src\BoilerPlateDemo_App.Application\ExportToExcelFile\] to Application-project,
-- copy [CaheStorage] directory from[BoilerPlateDemo_App\src\BoilerPlateDemo_App.Core] to your Core-Project.
-- copy [filecontroller.cs] from [BoilerPlateDemo_App\src\BoilerPlateDemo_App.Core\Controllers] to Core-Project Controller Directory.
+**Files to be copied:**
+- copy [ExportToExcel](https://github.com/Promact/aspnetboilerplate-extended/tree/master/src/BoilerPlateDemo_App.Application/ExportToExcelFile) directory from `BoilerPlateDemo_App\src\BoilerPlateDemo_App.Application\ExportToExcelFile\` to Application-project and register dependency  in `startup.cs` file i.e.
+````
+  //File Export dependecies injection
+  services.AddScoped<IFileExport, FileExport>();
+````
+- copy [CaheStorage](https://github.com/Promact/aspnetboilerplate-extended/tree/master/src/BoilerPlateDemo_App.Core/CacheStorage) directory from`BoilerPlateDemo_App\src\BoilerPlateDemo_App.Core` to your Core-Project.
+- copy [filecontroller.cs](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Web.Core/Controllers/FileController.cs) from `BoilerPlateDemo_App\src\BoilerPlateDemo_App.Core\Controllers` to Core-Project Controller Directory.
 
-NOTE:Most of the constant string vlue variable are stored in [Appconsts.cs] and [Stringconstants.ts] kindly copy or declare all the required constants before moving further,
+NOTE:Most of the constant string vlue variable are stored in `Appconsts.cs` and `Stringconstants.ts` kindly copy or declare all the required constants before moving further,
 
 After copying all the necessary files just navigate to DTO of the Entity which you want to export then add respective attributes on properties like:
-- Add [Export(IsAllowExport=false)] attribute on the top of property if you dont want to include that property as column in your exported excel sheet.
+- Add `[Export(IsAllowExport=false)]` attribute on the top of property if you dont want to include that property as column in your exported excel sheet.
 ````
  [Export(IsAllowExport = false)]
         public int Id { get; set; }
 ````
-- [DisplayName("Name")] attribute will display Name passed in parameted as  column title in excel sheet.
+- `[DisplayName("Name")]` attribute will display Name passed in parameted as  column title in excel sheet.
 ````
   [DisplayName("CreationTime")]
         public string Time { get; set; }
 ````
-- Property without [DisplayName("Name")] will have same column title as their column name.
+- Property without `[DisplayName("Name")]` will have same column title as their column name.
 
-Inject [FileExport] and [TempFileCache] in constructor and add their resoective declaration fields
+Inject `FileExport` and `TempFileCache` in constructor and add their resoective declaration fields
 ````
 private readonly IFileExport _fileExportService;
         private readonly ITempFileCacheManager _tempFileCacheManager;
@@ -414,8 +415,8 @@ private readonly IFileExport _fileExportService;
         }
 
 ````
-Add FileExport method in your service class and pass desired list of item in [CreateWorksheetForExcel(itemstoexport)] rest of file generation code will remain same only change will be in paramter of the above mentioned method.These all were server side now switch to client side.
-- copy [ExcelFileDownloadService] directory from [BoilerPlateDemo_App\src\BoilerPlateDemo_App.Web.Host\src\shared\ExcelFileDownloadService] to yourproject client side shared directory and add Download service in provideres of [appmodule.ts]
+Add FileExport method in your service class and pass desired list of item in `CreateWorksheetForExcel(itemstoexport)` rest of file generation code will remain same only change will be in paramter of the above mentioned method.These all were server side now switch to client side.
+- copy [ExcelFileDownloadService](https://github.com/Promact/aspnetboilerplate-extended/tree/master/src/BoilerPlateDemo_App.Web.Host/src/shared/ExcelFileDownloadService) directory from `BoilerPlateDemo_App\src\BoilerPlateDemo_App.Web.Host\src\shared\ExcelFileDownloadService` to yourproject client side shared directory and add Download service in provideres of  [app.module.ts](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Web.Host/src/app/app.module.ts)
 
 ````
 Providers:[ExcelFileDownloadService]
@@ -437,14 +438,211 @@ ExportToExcel(): void {
         });
 }
 ````
-call this method via html on click event
+- call this method via html on click event
 
 ````
 <a class="btn btn-primary text-white" type="button" (click)="ExportToExcel()">Export</a>
 ````
  
+# Highlight respective menu item in side bar when user redirects from the other page
+
+Routelinks having id in route path does not get highlighted in side menu bar while redirecting to that path using link so update below code in [sidebar-menu.component.ts]()  to solve this issue.
+
+- Add following code in constructor of the component
+````
+ this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+  };
+````
+- Replace `findMenuItemsByUrl` method with below code
+    ````
+    findMenuItemsByUrl(
+        url: string,
+        items: MenuItem[],
+        foundedItems: MenuItem[] = []
+        ): MenuItem[] {
+        items.forEach((item: MenuItem) => {
+        if (item.route === url) {
+        foundedItems.push(item);
+        }
+        else if (item.route!=="" && url.includes(item.route)) {
+        foundedItems.push(item);
+        }
+        else if (item.children) {
+        this.findMenuItemsByUrl(url, item.children, foundedItems);
+        }
+        });
+        return foundedItems;
+    }
+    ````
+    NOTE:There is one link below homepage title which will highlight respective menu item if clicked.
+
+# Add Pagination in list view
+Pagination provides structure and very organized view of the page to include pagination in project you need to add some changes which are as follow
+-   At serevr side dont just return list of items individually but return it  wrapped inside `PagedResultDto` object just same as Below also provide total count of list while instantiating `PagedResultDto`
+    ````
+     var totalCount = await filteredApplications.CountAsync();
+
+            return new PagedResultDto<GetApplicationForViewDto>(
+                totalCount,
+                 await applications.ToListAsync()
+            );
+    ````
+
+-   Now at client side extend your listing component class with `PagedListingComponentBase<classname>` which is provided by Boilerplate framework. It consist some abstract methods which needs to be declared so declare them first.
+    ````
+    export class ApplicationMasterComponent extends PagedListingComponentBase<ApplicationDto>{}
+    ````
+- As list method takes `PagedApplicatoinRquestDto` create that class and extend that with `PagedrequestDto` like below.
+    ````
+    class PagedApplicationRequestDto extends PagedRequestDto{
+
+    keyword: string;
+    sorting: string;
+    ````
+
+- Initiate service call in `protected list(request: PagedApplicationRequestDto,pageNumber: number,finishedCallback: Function)` as shown below and dont forget to call `showpaging()` in subscribe block.
+    ````
+    protected list(
+    request: PagedApplicationRequestDto,
+    pageNumber: number,
+    finishedCallback: Function): void {
+    this.isLoading = true;
+    request.keyword = this.keyword;
 
 
+    this._applicationService
+        .getAll(
+            this.filterText,
+            request.keyword,
+            request.sorting,
+            request.skipCount,
+            request.maxResultCount,
+        )
+        .pipe(
+            finalize(() => {
+                finishedCallback();
+            })
+        )
+        .subscribe((result: GetApplicationForViewDtoPagedResultDto) => {
+            this.applications = result.items;
+            this.showPaging(result, pageNumber);
+            
+        });
+    ````
 
+-   Add paginate pipe provided by Boilerplate in HTML listing code.Parameter value assigned below(pageSize, pagenumber, totalItems) are properties of `PagedListingComponentBase`.
+    ````
+       <tr *ngFor="
+                  let app of applications
+                    | paginate
+                      : {
+                          id: 'server',
+                          itemsPerPage: pageSize,
+                          currentPage: pageNumber,
+                          totalItems: totalItems
+                        }
+                ">
 
+    ````
+-   Add Pagination controls in HTML by adding follwing code in HTML
+    ````
+    div class="float-sm-right m-auto">
+                                <abp-pagination-controls id="server"
+                                                         (pageChange)="getDataPage($event)">
+                                </abp-pagination-controls>
+                            </div>
+    ````
 
+# Add Search functionality on listing page.
+- First of all create one dto having filter properties and extend that dto with ` PagedAndSortedResultRequestDto` like shown Below  
+    ````
+     public class GetAllApplicationInput : PagedAndSortedResultRequestDto
+    {
+        public string Filter { get; set; }
+
+        public string NameFilter { get; set; }
+    }
+    ````
+- Add newly created dto as paramter in listing methods on server side just like `GetAllApplicationInput` And add filter logic in code which will retrive filtered data.
+
+    ````
+      public async Task<PagedResultDto<GetApplicationForViewDto>> GetAllAsync(GetAllApplicationInput pageFormatData)
+        {
+           
+            var filteredApplications = _applicationRepository.GetAll()
+                 .WhereIf(!string.IsNullOrWhiteSpace(pageFormatData.Filter), e => false || e.ApplicationName.Trim().ToLower().Contains(pageFormatData.Filter.Trim().ToLower()))
+                .WhereIf(!string.IsNullOrWhiteSpace(pageFormatData.NameFilter), e => false || e.ApplicationName.Trim().ToLower().Contains(pageFormatData.NameFilter.Trim().ToLower())).AsQueryable();
+            var pagedAndFilteredApplications = filteredApplications.OrderBy(pageFormatData.Sorting??"id desc")
+                .PageBy(pageFormatData);
+            var applications = from o in pagedAndFilteredApplications
+                               select new GetApplicationForViewDto()
+                               {
+                                   Application = new ApplicationDto
+                                   {
+                                       ApplicationName = o.ApplicationName,
+                                       Id = o.Id,
+                                       ProjectId=o.ProjectId,
+                                       CreationTime = o.CreationTime.ToLocalTime(),
+                                   }
+                               };
+
+           
+            var totalCount = await filteredApplications.CountAsync();
+
+            return new PagedResultDto<GetApplicationForViewDto>(
+                totalCount,
+                 await applications.ToListAsync()
+            );
+    ````
+- Add search box in HTML and bind it with  `property` using `ngmodel` and assign `click` event with `getDatapage` method.
+    ````
+    <input type="text"
+                               class="form-control"
+                               name="keyword"
+                               [placeholder]="'SearchWithThreeDot' | localize"
+                               [(ngModel)]="keyword"
+                               (keyup.enter)="getDataPage(1)" />
+    ````
+- Assign `keyword` to `request.keyword` property of request paramater passed in list method and then pass `request.keyword` in service call along with other filter properties as shown below
+    ````
+     this._applicationService
+        .getAll(
+            this.filterText,
+            request.keyword,
+            request.sorting,
+            request.skipCount,
+            request.maxResultCount,
+        )
+    ````
+    NOTE: Make sure that parameter names in class and interfaces should remain same else it would not work 
+
+# Mapping of class into respective dto class
+Mapping of class into Dto class can be done using `Object.Mapper<OutputType>(ObjectYouWanttoMap)` function where object you want map is passed as paramater in that function.
+    ````
+      ApplicationDtoList = ObjectMapper.Map<List<ApplicationDto>>(ApplicationList);
+    ````
+Above code will convert `ApplicatoinList` into `ApplicationDtoList` and will store it in ApplicationDtoList variable.But Using this type of method in mapping requires certain prerequisites which are as follows.
+ - Copy [CustomeDtoMapper.cs](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Application/CustomDtoMapper.cs) into your Application Project
+ 
+ - Add mapping of you Dto and class in  [CustomeDtoMapper.cs](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Application/CustomDtoMapper.cs).
+    ````
+         internal class CustomDtoMapper
+    {
+
+        public static void CreateMappings(IMapperConfigurationExpression configuration)
+        {
+            configuration.CreateMap<CreateOrEditApplicationDto, Application>().ForMember(dto => dto.Id, options => options.Ignore()).ReverseMap();
+
+        }
+    }
+    ````
+- Add follwing configuaraion in `ProjectNameApplicationModule.cs` located in application-project just like  [BoilerPlateDemo_AppApplicationModule.cs](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Application/BoilerPlateDemo_AppApplicationModule.cs);
+     ````
+         public override void PreInitialize()
+        {
+            Configuration.Authorization.Providers.Add<BoilerPlateDemo_AppAuthorizationProvider>();
+            Configuration.Modules.AbpAutoMapper().Configurators.Add(CustomDtoMapper.CreateMappings);
+
+        }
+    ````
