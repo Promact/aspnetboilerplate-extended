@@ -23,6 +23,9 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
   constructor(injector: Injector, private router: Router) {
     super(injector);
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+  };
     this.router.events.subscribe(this.routerEvents);
   }
 
@@ -61,6 +64,19 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
         '/app/roles',
         'fas fa-theater-masks',
         'Pages.Roles'
+      ),
+      
+      new MenuItem(
+        this.l('Application'),
+        '',
+        'fab fa-adn','',[
+        new MenuItem(
+          this.l('ApplicationName'),
+          '/app/application',
+          'fab fa-adn',
+         
+        ),]
+       
       ),
       new MenuItem(this.l('About'), '/app/about', 'fas fa-info-circle'),
       new MenuItem(this.l('MultiLevelMenu'), '', 'fas fa-circle', '', [
@@ -155,16 +171,20 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
     url: string,
     items: MenuItem[],
     foundedItems: MenuItem[] = []
-  ): MenuItem[] {
+    ): MenuItem[] {
     items.forEach((item: MenuItem) => {
-      if (item.route === url) {
-        foundedItems.push(item);
-      } else if (item.children) {
-        this.findMenuItemsByUrl(url, item.children, foundedItems);
-      }
+    if (item.route === url) {
+    foundedItems.push(item);
+    }
+    else if (item.route!=="" && url.includes(item.route)) {
+    foundedItems.push(item);
+    }
+    else if (item.children) {
+    this.findMenuItemsByUrl(url, item.children, foundedItems);
+    }
     });
     return foundedItems;
-  }
+    }
 
   activateMenuItem(item: MenuItem): void {
     item.isActive = true;

@@ -1,0 +1,60 @@
+
+<!-- Application Section -->
+<section class="application-section" >
+    <form class="form-horizontal"
+          autocomplete="off"
+          #editApplicationModal="ngForm"
+          (ngSubmit)="save()">
+        <abp-modal-header [title]="'Edit Application Name' | localize"
+                          (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+        <div class="modal-body">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group row required">
+                                <label class="col-md-5 col-form-label" for="app-name">
+                                    {{ "Application Name" | localize }}
+                                </label>
+                                <div class="col-md-7">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="name"
+                                           id="name"
+                                           required
+                                           minlength="2"
+                                           maxlength="10"
+                                           placeholder="Enter Application Name"
+                                           [(ngModel)]="applicationEdit.applicationName"
+                                           #nameModel="ngModel"
+                                           #nameEl
+                                           [disabled]="isApplicationViewGranted && !isApplicationEditGranted"
+                                           />
+                            </div>
+                            <!-- Seachable Drop-Down  -->
+                            </div>
+                            <div class="form-group row required">
+                                <label class="col-md-5 col-form-label" for="app-name">
+                                    {{ "Project" | localize }}
+                                </label>
+                                <div class="col-md-7">
+                                    <ng-select appendTo="body" [items]="projects" placeholder="Searchable DropDown" [(ngModel)]="applicationEdit.projectId"  bindLabel="name" bindValue="id" name="projetcs">
+                                    <ng-template ng-option-tmp let-item="item">
+                                        <div title="{{item.name}}">{{item.name}}</div>
+                                    </ng-template>
+                                </ng-select>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div [hidden]="isApplicationViewGranted && !isApplicationEditGranted" >
+        <abp-modal-footer [cancelDisabled]="saving"
+                          [saveDisabled]="!editApplicationModal.form.valid || saving"
+                          (onCancelClick)="bsModalRef.hide()"></abp-modal-footer >
+        </div>
+        </form>
+</section>

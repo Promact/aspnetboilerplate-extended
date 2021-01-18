@@ -1,0 +1,118 @@
+<div>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6 row">
+                    <h1 class="bold">{{ "Application Name" | localize }}</h1>
+                   
+          
+           
+                </div>
+                <div class="col-6 text-right">
+                  
+                    <a href="javascript:;" class="btn btn-primary medium" (click)="createApplication()" *ngIf="isCreateGranted">
+                        <i class="fa fa-plus-square"></i>
+                        {{ "Create" | localize }}
+                    </a>
+                    &nbsp;
+                    <a class="btn btn-primary text-white" type="button" (click)="ExportToExcel()">Export</a>
+
+                </div>
+            </div>
+        </div>
+      
+    </section>
+    <section class="content px-2">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="input-group">
+                        <input type="text"
+                               class="form-control"
+                               name="keyword"
+                               [placeholder]="'SearchWithThreeDot' | localize"
+                               [(ngModel)]="keyword"
+                               (keyup.enter)="getDataPage(1)" />
+                        <div class="input-group-append">
+                            <button type="button"
+                                    class="btn bg-blue"
+                                    (click)="getDataPage(1)">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-bordered table-hover text-nowrap" [busy]="isTableLoading">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="medium text-center">{{ "Application Name" | localize }}</th>
+                                <th class="medium text-center">{{ "Created Date" | localize }}</th>
+                                <th class="medium text-center action-width">{{ "Actions" | localize }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="applications.length===0">
+                                <td colspan="3"><p class="no-record">{{showNoDataText}}</p></td>
+                            </tr>
+                            <tr *ngFor="
+                  let app of applications
+                    | paginate
+                      : {
+                          id: 'server',
+                          itemsPerPage: pageSize,
+                          currentPage: pageNumber,
+                          totalItems: totalItems
+                        }
+                ">
+
+                                <td class="text-center" tooltip="{{app.application.applicationName}}" placement="right" container="body">{{app.application.applicationName}}</td>
+                                <td class="text-center">{{app.application.creationTime|date:'M/d/yy, h:mm a'}}</td>
+                                <td class="text-center">
+
+                                    <button type="button"
+                                            class="btn btn-sm btn-table-action"
+                                            (click)="editApplication(app.application)"
+                                            tooltip="Edit" placement="top" container="body">
+                                        <i class="fas fa-pencil-alt"[hidden]="!isEditGranted" ></i>
+                                        <i class="fas fa-eye" [hidden]="isEditGranted && isViewGranted"></i>
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-sm btn-table-action ml-2"
+                                            (click)="delete(app.application)" *ngIf="isDeleteGranted"
+                                            tooltip="Delete" placement="top" container="body">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer bg-light border-top">
+                    <div class="row">
+                        <div class="col-sm-4 col-12 text-left mb-1 mb-sm-0">
+                            <button class="btn btn-secondary btn-table-action" (click)="refresh()">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-4 col-12 text-center">
+                            <p class="mb-0 my-2">
+                                {{ "TotalRecordsCount" | localize: totalItems }}
+                            </p>
+                        </div>
+                        <div class="col-sm-4 col-12">
+                            <div class="float-sm-right m-auto">
+                                <abp-pagination-controls id="server"
+                                                         (pageChange)="getDataPage($event)">
+                                </abp-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
