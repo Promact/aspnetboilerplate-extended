@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.01 as dotnet-build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 as dotnet-build
 WORKDIR /app
 COPY src/. .
 RUN cd BoilerplateDemo_App.Web.Host && dotnet publish -c Release -o out
