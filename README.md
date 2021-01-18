@@ -59,7 +59,7 @@ ASP.NET Boilerplate defines a�permission based�infrastructure to implement a
 We need to define a permission before it is used. ASP.NET Boilerplate is designed to be�modular, so different modules can have different permissions. A module should create a class derived from AuthorizationProvider.
 
 # Usage
-Server side Implementation
+**Server side Implementation**
 
 Add permission variables in PermissionNames file [here](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Core/Authorization/PermissionNames.cs)
 ```
@@ -100,7 +100,7 @@ Configuration.Authorization.Providers.Add< BoilerPlateDemo_AppAuthorizationProvi
 These added permissions will be shown in role master=> permission tab in checkbox form ,from where user can give permissions to particular role.
 
 # Checking Permissions
-Using AbpAuthorize Attribute
+**Using AbpAuthorize Attribute**
 
 //A user can not execute this method if he is not granted the
 "PermissionNames.Pages_Applications_Create " permission.
@@ -130,7 +130,7 @@ public void SomeMethod(SomeMethodInput input)
 }
 ```
 
-Add permission to client side
+**Add permission to client side**
 
 we need to check if the current user has a specific permission (with permission name).
 In app-routing.module.ts , Add permission attribute in route
