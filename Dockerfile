@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:5.01 as dotnet-build
+FROM mcr.microsoft.com/dotnet/sdk:5.01 as dotnet-build
 WORKDIR /app
 COPY src/. .
 RUN cd BoilerplateDemo_App.Web.Host && dotnet publish -c Release -o out
@@ -10,7 +10,7 @@ RUN npm install
 COPY src/BoilerPlateDemo_App.Web.Host/. .
 RUN npm run ng -- build --prod
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:5.0 as runtime
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 as runtime
 WORKDIR /app
 COPY --from=dotnet-build /app/src/BoilerPlateDemo_App.Web.Host/out ./
 COPY --from=angular-build /app/wwwroot/dist ./wwwroot
