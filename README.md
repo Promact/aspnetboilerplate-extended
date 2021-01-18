@@ -57,9 +57,9 @@ This are basic mail setting which uses google smtp service to send the mail.
 # Implementation of Roles and Permission with child permission
 ASP.NET Boilerplate defines a�permission based�infrastructure to implement authorization. The Authorization system uses�IPermissionChecker�to check permissions.
 We need to define a permission before it is used. ASP.NET Boilerplate is designed to be�modular, so different modules can have different permissions. A module should create a class derived from�AuthorizationProvider�.
-Usage
+#Usage
 Server side Implementation
-Add permission variables in PermissionNames file here
+Add permission variables in PermissionNames file [here](C:\aspnetboilerplate-extended\src\BoilerPlateDemo_App.Core\Authorization/PermissionNames.cs)
 ```
 public static class PermissionNames
     {
@@ -70,7 +70,7 @@ public static class PermissionNames
         public const string Pages_Applications_View = "Pages.Applications.View";
     }
 ```
-Then create permission with IPermissionDefinitionContext in this file here
+Then create permission with IPermissionDefinitionContext in this file [here](C:\aspnetboilerplate-extended\src\BoilerPlateDemo_App.Core\Authorization/BoilerPlateDemo_AppAuthorizationProvider.cs)
 Ex:
 ```
 #region application
