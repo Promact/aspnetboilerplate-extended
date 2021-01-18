@@ -3,7 +3,7 @@ WORKDIR /app
 COPY src/. .
 RUN cd BoilerPlateDemo_App.Web.Host && dotnet publish -c Release -o out
  
-FROM node as angular-build
+FROM node:12 as angular-build
 WORKDIR /app
 COPY src/BoilerPlateDemo_App.Web.Host/package*.json ./
 RUN npm install
