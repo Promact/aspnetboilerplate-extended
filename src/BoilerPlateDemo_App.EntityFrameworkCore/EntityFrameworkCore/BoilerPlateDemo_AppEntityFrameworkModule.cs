@@ -3,6 +3,11 @@ using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Zero.EntityFrameworkCore;
 using BoilerPlateDemo_App.EntityFrameworkCore.Seed;
+using Microsoft.EntityFrameworkCore;
+using Abp.MultiTenancy;
+using Abp.Domain.Uow;
+using Abp.EntityFrameworkCore;
+using Abp.EntityFrameworkCore.Configuration;
 
 namespace BoilerPlateDemo_App.EntityFrameworkCore
 {
@@ -41,6 +46,18 @@ namespace BoilerPlateDemo_App.EntityFrameworkCore
 
         public override void PostInitialize()
         {
+            var dbContextProvider = IocManager.Resolve<IDbContextProvider<BoilerPlateDemo_AppDbContext>>();
+            var unitOfWorkManager = IocManager.Resolve<IUnitOfWorkManager>();
+
+            using (var unitOfWork = unitOfWorkManager.Begin())
+            {
+                var context = dbContextProvider.GetDbContext(MultiTenancySides.Host);
+
+                //Removes actual connection as it has been enlisted in a non needed transaction for migration
+                context.Database.CloseConnection();
+                context.Database.Migrate();
+            }
+
             if (!SkipDbSeed)
             {
                 SeedHelper.SeedHostDb(IocManager);
