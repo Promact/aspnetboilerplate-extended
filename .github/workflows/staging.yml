@@ -27,9 +27,7 @@ jobs:
         uses: cschleiden/replace-tokens@v1.0
         with:
          files: '["**/appconfig.production.json"]'
-        env:
-          remoteServiceBaseUrl: ${{ secrets.CET_URL_STAGING }}
-          appBaseUrl: ${{ secrets.CET_URL_STAGING }}
+        
          
       - name: Check value
         run: boilerplate /src/BoilerPlateDemo_App.Web.Host/src/assets/appconfig.production.json
@@ -37,7 +35,7 @@ jobs:
       - name: Build Docker Image
         run: |
           CURRENT_BRANCH="${GITHUB_REF##*/}"
-          docker build -t cet:$CURRENT_BRANCH . --file Dockerfile
+          docker build -t boilerplate:$CURRENT_BRANCH . --file Dockerfile
           
       - name: Run Docker Image
         run: |
