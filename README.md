@@ -91,13 +91,19 @@ public class BoilerPlateDemo_AppAuthorizationProvider : AuthorizationProvider
 ```
 Permissions can have parent and child permissions. While this does not affect permission checking, it helps to group the permissions in the UI.
 After creating an authorization provider, we should register it in the PreInitialize method of our module:
+
+```
 Configuration.Authorization.Providers.Add< BoilerPlateDemo_AppAuthorizationProvider >();
+```
 
 These added permissions will be shown in role master=> permission tab in checkbox form ,from where user can give permissions to particular role.
-Checking Permissions
+
+# Checking Permissions
 Using AbpAuthorize Attribute
+
 //A user can not execute this method if he is not granted the
 "PermissionNames.Pages_Applications_Create " permission.
+
 ```
 [AbpAuthorize(PermissionNames.Pages_Applications_Create)] 
 public async Task CreateApplicationAsync(CreateOrEditApplicationDto input)
@@ -111,6 +117,7 @@ if (!PermissionChecker.IsGranted(PermissionNames.Pages_Applications_Create))
     }
 
 }
+
 ```
 The CreateApplicationAsync method can not be called by a user who is not granted the permission "PermissionNames.Pages_Applications_Create ".
 The AbpAuthorize attribute also checks if the current user is logged in (using�IAbpSession.UserId). If we declare an AbpAuthorize for a method, it only checks for the login:
