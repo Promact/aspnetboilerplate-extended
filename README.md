@@ -72,9 +72,10 @@ public static class PermissionNames
     }
 ```
 Then create permission with IPermissionDefinitionContext in this file [here](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Core/Authorization/BoilerPlateDemo_AppAuthorizationProvider.cs)
-Ex:
+
+
 ```
-#region application
+Ex:
 public class BoilerPlateDemo_AppAuthorizationProvider : AuthorizationProvider
     {
         public override void SetPermissions(IPermissionDefinitionContext context)
@@ -84,7 +85,7 @@ public class BoilerPlateDemo_AppAuthorizationProvider : AuthorizationProvider
             app.CreateChildPermission(PermissionNames.Pages_Applications_Edit, L("Applications.Edit"));
             app.CreateChildPermission(PermissionNames.Pages_Applications_Delete, L("Applications.Delete"));
             app.CreateChildPermission(PermissionNames.Pages_Applications_View, L("Applications.View"));
-            #endregion
+          
 }
 }
 ```
