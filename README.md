@@ -60,6 +60,7 @@ We need to define a permission before it is used. ASP.NET Boilerplate is designe
 
 # Usage
 Server side Implementation
+
 Add permission variables in PermissionNames file [here](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Core/Authorization/PermissionNames.cs)
 ```
 public static class PermissionNames
@@ -128,7 +129,9 @@ public void SomeMethod(SomeMethodInput input)
     //A user can not execute this method if he did not login.
 }
 ```
+
 Add permission to client side
+
 we need to check if the current user has a specific permission (with permission name).
 In app-routing.module.ts , Add permission attribute in route
 ```
