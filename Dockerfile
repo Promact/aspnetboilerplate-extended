@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 as dotnet-build
 WORKDIR /app
 COPY src/. .
-RUN cd BoilerplateDemo_App.Web.Host && dotnet publish -c Release -o out
+RUN cd BoilerPlateDemo_App.Web.Host && dotnet publish -c Release -o out
  
 FROM node as angular-build
 WORKDIR /app
