@@ -32,7 +32,7 @@ jobs:
           appBaseUrl: ${{ secrets.DEV }}
          
       - name: Check value
-        run: cat angular/src/assets/appconfig.production.json
+        run: cat src/BoilerPlateDemo_App.Web.Host/src/assets/appconfig.production.json
       
       - name: Build Docker Image
         run: |
