@@ -6,6 +6,10 @@
         /// Default pass phrase for SimpleStringCipher decrypt/encrypt operations
         /// </summary>
         public const string DefaultPassPhrase = "gsKxGZ012HLL3MI5";
+        public const string DashSymbol = "-";
+        public const string ExcelFileExtention = ".xlsx";
+        public const string ExportFilename = "ExportedFile";
+        public static string ExcelFormat = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         public const string InvalidEmail = "Invalid Email";
         public static string Route = "/account/reset-password/";
         public static string ResetPasswordMailSubject = "Reset your password at CET AT";
@@ -18,5 +22,12 @@
         public static string ResetPasswordMailLinkTitle = "Reset Password";
         public static string CheersMessage = "Cheers! ";
         public static string CetAtTeamMessage = "The CET AT Team ";
+        public static string FileNotExistMessage = "File Does not Exist";
+        public const string AlphanumericRegex = "^[a-zA-Z0-9][a-zA-Z0-9_@.,()*/#&+-_ ]*$";
+        public const string AlphanumericRegexForDatabase = "^.[a-zA-Z0-9_@.,()*/#&+-_ ]*$";
+        public const string DecimalRegex = @"^[0-9]{0,5}(\.[0-9]{0,2})?$";
+        public const string ApplicationIsAlreadyExist = "Application should be unique";
+        public const string UseOnlyAlphaNumericForApplication = "Application name should be valid.";
+        public const string DoesNotExist = "Application does not exist";
     }
 }

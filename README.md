@@ -211,9 +211,238 @@ For delete permission
  <i class="fas fa-trash"></i>
    </button>
 ```
+# Toaster Message
+
+Toaster Message is very crucial to provide a User friendly interface. To add toaster message in project user has to follow certain steps which are as follows:
+
+Step-1:In this step, we will install ngx-toastr and @angular/animations npm packages. so let's run both command as like bellow:
+````
+npm install ngx-toastr --save
+npm install @angular/animations --save
+````
+Step-2:Now, we need to include toastr css like "node_modules/ngx-toastr/toastr.css", so let's add it on angular.json file.So Navigate to angular.json file add add following style path.
+
+````
+    "styles": [
+      "node_modules/ngx-toastr/toastr.css",
+      "src/styles.css"
+    ],
+````
+Step-3:In this step, we need to import ToastrModule and BrowserAnimationsModule to app.module.ts file. so let's import it as like bellow:
+````
+//Toaster
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+````
+NOTE:If you have imported Browser animation module in any of your root components then dont import it again it will cause error.(ex=> We have imported browser animation in rootmodule.ts so no need to import it again in app module.)
+
+Step-4:Now Add Toaster Module in declaration of appmodule.ts,Here You can also provide timeout,position and many other display properties.
+ ````
+ //Toaster
+    ToastrModule.forRoot({
+            timeOut: 3000,
+            positionClass: 'toast-top-right',
+            preventDuplicates: true,
+        }),
+````
+
+Step-5:In this step We need to add Toaster service in Appmodule.ts Provider array.
+````
+ providers: [
+      ToastrService],
+ ````
+
+Step-6:Now Inject this service in your component class constructor.
+````
+ constructor(private toaster:ToastrService)
+
+````
+
+Step-7:You are all set to use  toaster service to display notification or messages in a very attractive manner.we have used it in [ShowToaster()]method of [Application-master] Component
+
+````
+ShowToaster(){
+  this.toaster.success(this.stringConstant.toasterMEssage);
+ 
+}
+````
+
+NOTE:There are multiple options like Success,Error and many more you can use it as per requirement.
+
+# Converting Time From UTC to IST
+Geneally we use [DateTime.Now] property to set time instance to current time but sometimes it causes trouble to convert into IST due to time zone difference so Boiler Plate Provides [Abp.Timing] which generally solve this issue so rather using [DateTime.Now] use [Clock.Now] to store current time and use [ToLocalTime()] method to convert time into system time zone.
+NOTE:Colck.Now is provided by Abp.Timing 
+````
+ new Project{
+ Name="Project1", CreationTime=Clock.Now, CreatorUserId=1,IsDeleted=false },
+````
+Example of conversion in local time
+````
+CreationTime = o.CreationTime.ToLocalTime(),
+````
+
+# Adding Tooltip in Project
+Tooltip provides information about component and its working there are certain steps to follow to add tooltips which are as follows:
+Step-1:In this step, we will install bootstrap  package. so we can use bootstrap css so let's install by following command:
+````
+npm install ngx-bootstrap --save
+````
+Step-2:Now, we need to include bootstrap css like ["node_modules/bootstrap/dist/css/bootstrap.min.css",] so let's add it on angular.json file.
+````
+    "styles": [
+      "node_modules/bootstrap/dist/css/bootstrap.min.css",
+      "src/styles.css"
+    ],
+
+````
+
+Step-3:import [TooltipModule] in [AppModule.ts]  
+````
+//Tooltip
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+
+imports[  
+    TooltipModule.forRoot(),]
+
+````
+Step-4:Add Tooltip in HTML component 
+````
+    <td class="text-center" tooltip="{{app.application.applicationName}}" placement="right" container="body">{{app.application.applicationName}}</td>
+````
+
+# 404 page implementatoin for non authorized user
+404 page will be displayed in scenarios when user does not have sufficient permissio to view that particular page to add 404 page go throug following steps;
+
+Step-1:Add 404 componenet using cli
+````
+ng g c 404.component
+````
+
+Step-2:Add boolean variable into component to map with the permission just like [isviewGranted] in [Application-master-component.ts] like below.
+````
+ isCreateGranted = false;
+ isEditGranted = false;
+ isDeleteGranted = false;
+ isViewGranted = false;
+````
+
+Step-3:Check the permission status using [abp.auth.isGranted()] method it will return boolean and chec for permission using condition statment and navigate to [404-component] if does not satisfy condition. for example
+````
+constructor(private _router:Router){
+
+    
+      this.isCreateGranted = abp.auth.isGranted(this.stringConstant.applicationCreatePermission);
+      this.isEditGranted = abp.auth.isGranted(this.stringConstant.applicationEditPermission);
+      this.isDeleteGranted = abp.auth.isGranted(this.stringConstant.applicationDeletePermission);
+      this.isViewGranted = abp.auth.isGranted(this.stringConstant.applicationViewPermission);
+
+        if(!this.isViewGranted){
+          this._router.navigate(["/app/404"])
+      }
+}
+````
+
+# Add seachable dropdown
+  [@ng-select/ng-select] library provides search functionality in drop downs to add [ngselect] in project follow step mentioned below:
+
+  Step-1:Install ng-select library using below command
+  ````
+  npm install --save @ng-select/ng-select
+  ````
+
+  Step-2:Add ng-select in import section of [app.module.ts]
+  ````
+  //ng-select
+  import { NgSelectModule } from '@ng-select/ng-select';
+  imports:[NgSelectModule ]
+  ````
+Step-3:Include theme to allow customization and theming, ng-select bundle includes only generic styles that are necessary for correct layout and positioning. To get full look of the control, include one of the themes in your application.Add style path in [angular.json].
+
+````
+"styles":[ "node_modules/@ng-select/ng-select/themes/default.theme.css"]
+
+````
+
+Step-4:Start usign [ng-select] in html file for Example.
+````
+ <ng-select appendTo="body" [items]="projects" placeholder="Searchable DropDown" [(ngModel)]=" createApplication.projectId"  bindLabel="name" bindValue="id" name="projetcs">
+     <ng-template ng-option-tmp let-item="item">
+        <div title="{{item.name}}">{{item.name}}</div>
+    </ng-template>
+</ng-select>
+````
+
+# ExportFileToExcel
+First of all install [DocumentFormat.OpenXml] package by running following command,then copy all the necessary files which will be used in export functionality.
+````
+Install-Package DocumentFormat.OpenXml 
+````
+Files to be copied:
+- copy [ExportToExcel] directory from [BoilerPlateDemo_App\src\BoilerPlateDemo_App.Application\ExportToExcelFile\] to Application-project,
+- copy [CaheStorage] directory from[BoilerPlateDemo_App\src\BoilerPlateDemo_App.Core] to your Core-Project.
+- copy [filecontroller.cs] from [BoilerPlateDemo_App\src\BoilerPlateDemo_App.Core\Controllers] to Core-Project Controller Directory.
+
+NOTE:Most of the constant string vlue variable are stored in [Appconsts.cs] and [Stringconstants.ts] kindly copy or declare all the required constants before moving further,
+
+After copying all the necessary files just navigate to DTO of the Entity which you want to export then add respective attributes on properties like:
+- Add [Export(IsAllowExport=false)] attribute on the top of property if you dont want to include that property as column in your exported excel sheet.
+````
+ [Export(IsAllowExport = false)]
+        public int Id { get; set; }
+````
+- [DisplayName("Name")] attribute will display Name passed in parameted as  column title in excel sheet.
+````
+  [DisplayName("CreationTime")]
+        public string Time { get; set; }
+````
+- Property without [DisplayName("Name")] will have same column title as their column name.
+
+Inject [FileExport] and [TempFileCache] in constructor and add their resoective declaration fields
+````
+private readonly IFileExport _fileExportService;
+        private readonly ITempFileCacheManager _tempFileCacheManager;
+        private readonly IRepository<Project> _projectRepository;
+
+        public ApplicationAppService(IFileExport fileExportService,
+                                        ITempFileCacheManager tempFileCacheManager,
+                                        )
+        {
+            _fileExportService = fileExportService;
+            _tempFileCacheManager = tempFileCacheManager;
+            
+        }
+
+````
+Add FileExport method in your service class and pass desired list of item in [CreateWorksheetForExcel(itemstoexport)] rest of file generation code will remain same only change will be in paramter of the above mentioned method.These all were server side now switch to client side.
+- copy [ExcelFileDownloadService] directory from [BoilerPlateDemo_App\src\BoilerPlateDemo_App.Web.Host\src\shared\ExcelFileDownloadService] to yourproject client side shared directory and add Download service in provideres of [appmodule.ts]
+
+````
+Providers:[ExcelFileDownloadService]
+````
+
+After copying and regestring  service in constructor of the component and call methods for export and download as shown below
+````
+ constructor(injector: Injector, private _applicationService: ApplicationServiceProxy, private stringConstant: StringConstants,
+      private excelFileDownloadService:ExcelFileDownloadService) {
+      super(injector);
 
 
+ExportToExcel(): void {
+ 
+  this._applicationService.getUsersToExcel()
+      .subscribe(result => {
+        
+          this.excelFileDownloadService.downloadTempFile(result);
+        });
+}
+````
+call this method via html on click event
 
+````
+<a class="btn btn-primary text-white" type="button" (click)="ExportToExcel()">Export</a>
+````
+ 
 
 
 
