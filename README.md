@@ -157,20 +157,28 @@ Add permission variable in string constant file in angular
     applicationDeletePermission = 'Pages.Applications.Delete';
     applicationViewPermission = 'Pages.Applications.View';
 ```
-Use these variables in component.ts. Inject string constant file in component and use  variables of it,
+Use these variables in component.ts. Inject string constant file in component and use  variables of it.
+
 Ex:
 ```
+export class ApplicationMasterComponent extends PagedListingComponentBase<ApplicationDto> {
 isCreateGranted =false;
 isEditGranted =false;
 isDeleteGranted =false;
 isViewGranted =false;
 
+constructor(private stringConstant: StringConstants){ 
+
+super(injector);
     this.isCreateGranted = abp.auth.isGranted(this.stringConstant.applicationCreatePermission);
     this.isEditGranted = abp.auth.isGranted(this.stringConstant.applicationEditPermission);
     this.isDeleteGranted = abp.auth.isGranted(this.stringConstant.applicationDeletePermission);
     this.isViewGranted = abp.auth.isGranted(this.stringConstant.applicationViewPermission);
+}
+}
 ```
 Use this variable in html to show/hide actions 
+
 Ex:
 For create permission
 ```
