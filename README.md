@@ -1,4 +1,4 @@
-# Update Basic User Details
+﻿# Update Basic User Details
 
 Generic Repository implementation for updating user basic details like Name,Surname,Email,UserName etc in Application Project.
 
@@ -55,13 +55,15 @@ This are basic mail setting which uses google smtp service to send the mail.
 
 
 # Implementation of Roles and Permission with child permission
-ASP.NET Boilerplate defines a�permission based�infrastructure to implement authorization. The Authorization system uses�IPermissionChecker�to check permissions.
-We need to define a permission before it is used. ASP.NET Boilerplate is designed to be�modular, so different modules can have different permissions. A module should create a class derived from AuthorizationProvider.
+ASP.NET Boilerplate defines a**permission based** infrastructure to implement authorization. The Authorization system uses** IPermissionChecker** to check permissions.
+We need to define a permission before it is used. ASP.NET Boilerplate is designed to be modular, so different modules can have different permissions. A module should create a class derived from **AuthorizationProvider.**
 
 # Usage
 **Server side Implementation**
 
-Add permission variables in PermissionNames file [here](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Core/Authorization/PermissionNames.cs)
+Add permission variables in PermissionNames file . [here](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Core/Authorization/PermissionNames.cs)
+
+These variables will be used in creating permissions with the help of AuthorizationProvider.
 ```
 public static class PermissionNames
     {
@@ -72,9 +74,9 @@ public static class PermissionNames
         public const string Pages_Applications_View = "Pages.Applications.View";
     }
 ```
-Then create permission with IPermissionDefinitionContext in this file [here](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Core/Authorization/BoilerPlateDemo_AppAuthorizationProvider.cs)
+Then create permission with **IPermissionDefinitionContext** in this file [here](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Core/Authorization/BoilerPlateDemo_AppAuthorizationProvider.cs)
 
-
+Create main module permission with its child permission if any.
 ```
 Ex:
 public class BoilerPlateDemo_AppAuthorizationProvider : AuthorizationProvider
@@ -91,19 +93,19 @@ public class BoilerPlateDemo_AppAuthorizationProvider : AuthorizationProvider
 }
 ```
 Permissions can have parent and child permissions. While this does not affect permission checking, it helps to group the permissions in the UI.
-After creating an authorization provider, we should register it in the PreInitialize method of our module:
+After creating an authorization provider, we should register it in the **PreInitialize** method of our module: Path of file is [here]( https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Application/BoilerPlateDemo_AppApplicationModule.cs) 
 
 ```
 Configuration.Authorization.Providers.Add< BoilerPlateDemo_AppAuthorizationProvider >();
 ```
 
-These added permissions will be shown in role master=> permission tab in checkbox form ,from where user can give permissions to particular role.
+These added permissions will be shown in **role master=> permission tab** in checkbox form ,from where user can give permissions to particular role.
 
 # Checking Permissions
 **Using AbpAuthorize Attribute**
 
 //A user can not execute this method if he is not granted the
-"PermissionNames.Pages_Applications_Create " permission.
+**"PermissionNames.Pages_Applications_Create"** permission.
 
 ```
 [AbpAuthorize(PermissionNames.Pages_Applications_Create)] 
@@ -120,8 +122,8 @@ if (!PermissionChecker.IsGranted(PermissionNames.Pages_Applications_Create))
 }
 
 ```
-The CreateApplicationAsync method can not be called by a user who is not granted the permission "PermissionNames.Pages_Applications_Create ".
-The AbpAuthorize attribute also checks if the current user is logged in (using�IAbpSession.UserId). If we declare an AbpAuthorize for a method, it only checks for the login:
+The CreateApplicationAsync method can not be called by a user who is not granted the permission **"PermissionNames.Pages_Applications_Create".**
+The AbpAuthorize attribute also checks if the current user is logged in. If we declare an AbpAuthorize for a method, it only checks for the login:
 ```
 [AbpAuthorize]
 public void SomeMethod(SomeMethodInput input)
@@ -133,7 +135,7 @@ public void SomeMethod(SomeMethodInput input)
 **Add permission to client side**
 
 we need to check if the current user has a specific permission (with permission name).
-In app-routing.module.ts , Add permission attribute in route
+In **app-routing.module.ts** , Add permission attribute in route
 ```
 @NgModule({
     imports: [
@@ -142,11 +144,12 @@ In app-routing.module.ts , Add permission attribute in route
                 path: '',
                 component: AppComponent,
                 children: [
-{ path: 'masters/applications', component: MastersApplicationComponent, data: { permission: 'Pages.Applications' }, canActivate: [AppRouteGuard]}]                 
+{ path: 'masters/applications', component: MastersApplicationComponent, **data: { permission: 'Pages.Applications'** }, canActivate: [AppRouteGuard]}]                 
             },])]
 ```
 To show /hide actions according to  child permission
-Create variables using abp.auth.isGranted(assigned permission) 
+create variables using **abp.auth.isGranted(assigned permission)**.
+
 Add permission variable in string constant file in angular
 ```
     applicationCreatePermission = 'Pages.Applications.Create';
@@ -154,9 +157,14 @@ Add permission variable in string constant file in angular
     applicationDeletePermission = 'Pages.Applications.Delete';
     applicationViewPermission = 'Pages.Applications.View';
 ```
-Use this variables in component.ts
+Use these variables in component.ts. Inject string constant file in component and use  variables of it,
 Ex:
 ```
+isCreateGranted =false;
+isEditGranted =false;
+isDeleteGranted =false;
+isViewGranted =false;
+
     this.isCreateGranted = abp.auth.isGranted(this.stringConstant.applicationCreatePermission);
     this.isEditGranted = abp.auth.isGranted(this.stringConstant.applicationEditPermission);
     this.isDeleteGranted = abp.auth.isGranted(this.stringConstant.applicationDeletePermission);
