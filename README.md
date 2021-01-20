@@ -161,7 +161,7 @@ For delete permission
 <button type="button" class="btn btn-sm btn-table-action ml-2" (click)="delete(app.application)" *ngIf="isDeleteGranted"  tooltip="Delete" placement="top" container="body">
  <i class="fas fa-trash"></i>
    </button>
-
+```
 
 # Grid
 
