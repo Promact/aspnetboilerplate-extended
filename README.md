@@ -1,4 +1,38 @@
-﻿# Update Basic User Details
+﻿# User and Role Management
+
+### Forgot password
+
+### Update Profile
+
+### User and roles mapping
+
+### Implementation of R & P with child permissions
+
+# Grid
+
+### Pagination on listing pages
+
+### Search on listing pages
+
+### Search on listing pages
+
+# Design
+
+### Show 404 page when user trying to access the page for which he does not have rights
+
+### Set tooltip on list pages
+
+### Searchable dropdowns
+
+### Adding toaster for showing validation and success message
+
+### Highlight respective menu item in side bar when user redirects from the other page
+
+### UTC to IST time conversion
+
+
+
+# Update Basic User Details
 
 Generic Repository implementation for updating user basic details like Name,Surname,Email,UserName etc.
 
