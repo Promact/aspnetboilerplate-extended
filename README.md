@@ -1,12 +1,12 @@
 ﻿# User and Role Management
 
-### Forgot password
+## Forgot password
 
-### Update Profile
+## Update Profile
 
 
-### Implementation of R & P with child permissions
-**Purpose: ** ASP.NET Boilerplate does not provide default functionality to add child permissions(Create/Edit/View/Delete) out of the box so to implement it we used its **AuthorizationProvider.**
+## Implementation of Role & Permissions with child permissions
+**Purpose:** ASP.NET Boilerplate does not provide default functionality to add child permissions(Create/Edit/View/Delete) out of the box so to implement it we used its **AuthorizationProvider.**
 
 # Description
 ASP.NET Boilerplate defines a **permission based** infrastructure to implement authorization. The Authorization system uses 
@@ -17,7 +17,7 @@ We need to define a permission before it is used. ASP.NET Boilerplate is designe
 **Server side Implementation**
 -------------------------------
 
-Add permission variables in PermissionNames file . [here](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Core/Authorization/PermissionNames.cs)
+Add permission variables in PermissionNames file [here](https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Core/Authorization/PermissionNames.cs)
 
 These variables will be used in creating permissions with the help of AuthorizationProvider.
 ```
@@ -45,17 +45,17 @@ public class BoilerPlateDemo_AppAuthorizationProvider : AuthorizationProvider
             app.CreateChildPermission(PermissionNames.Pages_Applications_Delete, L("Applications.Delete"));
             app.CreateChildPermission(PermissionNames.Pages_Applications_View, L("Applications.View"));
           
-}
-}
+	}
+ }
 ```
 Permissions can have parent and child permissions. While this does not affect permission checking, it helps to group the permissions in the UI.
-After creating an authorization provider, we should register it in the **PreInitialize** method of our module: Path of file is [here]( https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Application/BoilerPlateDemo_AppApplicationModule.cs) 
+After creating an authorization provider, we should register it in the **PreInitialize** method of our module: **Path of file is** [here]( https://github.com/Promact/aspnetboilerplate-extended/blob/master/src/BoilerPlateDemo_App.Application/BoilerPlateDemo_AppApplicationModule.cs) 
 
 ```
 Configuration.Authorization.Providers.Add< BoilerPlateDemo_AppAuthorizationProvider >();
 ```
 
-These added permissions will be shown in **role master=> permission tab** in checkbox form ,from where user can give permissions to particular role.
+These added permissions will be shown in **Role master=> permission tab** in checkbox form ,from where user can give permissions to particular role.
 
 # Checking Permissions
 **Using AbpAuthorize Attribute**
@@ -161,7 +161,7 @@ For delete permission
 <button type="button" class="btn btn-sm btn-table-action ml-2" (click)="delete(app.application)" *ngIf="isDeleteGranted"  tooltip="Delete" placement="top" container="body">
  <i class="fas fa-trash"></i>
    </button>
-
+```
 
 # Grid
 
