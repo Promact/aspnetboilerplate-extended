@@ -2898,10 +2898,10 @@ export interface IProject {
 }
 
 export class ApplicationDto implements IApplicationDto {
-    projectName: string | undefined;
     id: number;
     applicationName: string;
     projectId: number;
+    projectName: string;
     creationTime: moment.Moment;
     project: Project;
     time: string | undefined;
@@ -2917,10 +2917,10 @@ export class ApplicationDto implements IApplicationDto {
 
     init(_data?: any) {
         if (_data) {
-            this.projectName = _data["projectName"];
             this.id = _data["id"];
             this.applicationName = _data["applicationName"];
             this.projectId = _data["projectId"];
+            this.projectName = _data["projectName"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
             this.project = _data["project"] ? Project.fromJS(_data["project"]) : <any>undefined;
             this.time = _data["time"];
@@ -2936,10 +2936,10 @@ export class ApplicationDto implements IApplicationDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["projectName"] = this.projectName;
         data["id"] = this.id;
         data["applicationName"] = this.applicationName;
         data["projectId"] = this.projectId;
+        data["projectName"] = this.projectName;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["project"] = this.project ? this.project.toJSON() : <any>undefined;
         data["time"] = this.time;
@@ -2955,10 +2955,10 @@ export class ApplicationDto implements IApplicationDto {
 }
 
 export interface IApplicationDto {
-    projectName: string | undefined;
     id: number;
     applicationName: string;
     projectId: number;
+    projectName: string;
     creationTime: moment.Moment;
     project: Project;
     time: string | undefined;
@@ -3116,6 +3116,7 @@ export interface IFileDto {
 export class CreateOrEditApplicationDto implements ICreateOrEditApplicationDto {
     applicationName: string;
     projectId: number;
+    projectName: string;
     id: number | undefined;
 
     constructor(data?: ICreateOrEditApplicationDto) {
@@ -3131,6 +3132,7 @@ export class CreateOrEditApplicationDto implements ICreateOrEditApplicationDto {
         if (_data) {
             this.applicationName = _data["applicationName"];
             this.projectId = _data["projectId"];
+            this.projectName = _data["projectName"];
             this.id = _data["id"];
         }
     }
@@ -3146,6 +3148,7 @@ export class CreateOrEditApplicationDto implements ICreateOrEditApplicationDto {
         data = typeof data === 'object' ? data : {};
         data["applicationName"] = this.applicationName;
         data["projectId"] = this.projectId;
+        data["projectName"] = this.projectName;
         data["id"] = this.id;
         return data; 
     }
@@ -3161,6 +3164,7 @@ export class CreateOrEditApplicationDto implements ICreateOrEditApplicationDto {
 export interface ICreateOrEditApplicationDto {
     applicationName: string;
     projectId: number;
+    projectName: string;
     id: number | undefined;
 }
 

@@ -12,7 +12,10 @@ namespace CETAutomation.Applications.Dto
         [Required]
         [StringLength(10)]
         public string ApplicationName { get; set; }
-
+        
+        
         public int ProjectId { get; set; }
+        [Required(ErrorMessage = "Project is required")]
+        public string ProjectName { get; set; }
     }
 }

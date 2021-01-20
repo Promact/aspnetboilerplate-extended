@@ -14,7 +14,7 @@ namespace CETAutomation.Applications.Dto
     [AutoMapFrom(typeof(CETAutomation.Masters.Application))]
     public class ApplicationDto 
     {
-        public string ProjectName { get; set; }
+        
 
         //Export(IsAllowExport)=false attribute will ignore this column while export
        
@@ -28,6 +28,8 @@ namespace CETAutomation.Applications.Dto
 
         [Export(IsAllowExport = false)]
         public int ProjectId { get; set; }
+        [Required(ErrorMessage = "Project is required")]
+        public string ProjectName { get; set; }
 
         [Export(IsAllowExport = false)]
         public DateTime CreationTime { get; set; }

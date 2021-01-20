@@ -55,6 +55,10 @@ export class ApplicationEditMasterComponent extends AppComponentBase implements 
      * Method for saving application data after editing
      */
    save(): void {
+    this.applicationEdit.projectId === null ? this.applicationEdit.projectId = 0 : this.applicationEdit.projectId;
+    if(this.applicationEdit.projectId !== null && this.applicationEdit.projectId !== undefined){
+      this.applicationEdit.projectName = this.projects.find(x=>x.id===this.applicationEdit.projectId)?.name;
+    }
     this.isLoading=true;
     this.saving = true;
     if (this.selectedApplication) {

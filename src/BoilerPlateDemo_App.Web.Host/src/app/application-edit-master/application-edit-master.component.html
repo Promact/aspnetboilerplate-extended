@@ -38,7 +38,7 @@
                                     {{ "Project" | localize }}
                                 </label>
                                 <div class="col-md-7">
-                                    <ng-select appendTo="body" [items]="projects" placeholder="Searchable DropDown" [(ngModel)]="applicationEdit.projectId"  bindLabel="name" bindValue="id" name="projetcs">
+                                    <ng-select appendTo="body" [items]="projects" placeholder="Searchable DropDown" [(ngModel)]="applicationEdit.projectId" [disabled]="isApplicationViewGranted && !isApplicationEditGranted"  bindLabel="name" bindValue="id" name="projetcs">
                                     <ng-template ng-option-tmp let-item="item">
                                         <div title="{{item.name}}">{{item.name}}</div>
                                     </ng-template>
