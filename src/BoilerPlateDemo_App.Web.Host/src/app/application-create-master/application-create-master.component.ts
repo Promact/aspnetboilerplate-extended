@@ -37,6 +37,9 @@ export class ApplicationCreateMasterComponent implements OnInit {
     * Method for saving application data
     */
     save(): void {
+      if(this.createApplication.projectId !== null && this.createApplication.projectId !== undefined){
+        this.createApplication.projectName = this.projects.find(x=>x.id===this.createApplication.projectId)?.name;
+      }
       this.saving = true;
      
           this.isLoading = true;
