@@ -4,6 +4,8 @@ import { ApplicationDto, GetApplicationForViewDto, ApplicationServiceProxy, GetA
 import {StringConstants} from'../../shared/stringConstants'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
+import { ApplicationCreateMasterComponent } from '@app/application-create-master/application-create-master.component';
+import { ApplicationEditMasterComponent } from '@app/application-edit-master/application-edit-master.component';
 
 
 class PagedApplicationRequestDto extends PagedRequestDto{
@@ -20,12 +22,8 @@ class PagedApplicationRequestDto extends PagedRequestDto{
   styleUrls: ['./application-master.component.css']
 })
 export class ApplicationMasterComponent extends PagedListingComponentBase<ApplicationDto> {
-    protected delete(entity: ApplicationDto): void {
-        throw new Error('Method not implemented.');
-    }
- 
-
-  applications: GetApplicationForViewDto[] = [];
+    
+    applications: GetApplicationForViewDto[] = [];
     
    
     showNoDataText = '';
@@ -66,7 +64,76 @@ protected list(
             this.showPaging(result, pageNumber);
             
         });
+
+    }
+
+        /**
+     * Method to delete application
+     * @param app : Application to be deleted
+     */
+    protected delete(app: ApplicationDto): void {
+        abp.message.confirm(
+            this.l(this.stringConstant.deleteWarningMessage, app.applicationName),
+            undefined,
+            (result: boolean) => {
+                if (result) {
+                    this._applicationService.deleteApplication(app.id).subscribe(() => {
+                        this.notify.success(this.l(this.stringConstant.applicationDeleteMessage));
+                        this.refresh();
+                    });
+                }
+            }
+        );
+    }
+  
+    /**
+    * Method to display create master dialog 
+    */
+    createApplication(): void {
+        this.showCreateOrEditMasterDialog();
+    }
+
+    /**
+   * Method for editing application
+   * @param application:application to be edited
+   */
+   editApplication(application: ApplicationDto): void {
+    this.showCreateOrEditMasterDialog(application.id);
 }
+  
+  
+  /**
+   * Method for toggling create abd edit dialog of master 
+   */
+  private showCreateOrEditMasterDialog(id?: number): void {
+    let createOrEditMasterDialog: BsModalRef;
+    if (!id) {
+        createOrEditMasterDialog = this._modalService.show(
+            ApplicationCreateMasterComponent,
+            {
+                class: 'modal-dialog-centered',
+            }
+        );
+    }
+    else {
+        createOrEditMasterDialog = this._modalService.show(
+            ApplicationEditMasterComponent,
+            {
+                class: 'modal-dialog-centered',
+                initialState: {
+                    id: id,
+                },
+            }
+        );
+    }
+  
+    createOrEditMasterDialog.content.onSave.subscribe(() => {
+        this.refresh();
+    });
+  }
+}
+
+
 
    
 
@@ -75,4 +142,4 @@ protected list(
 
 
 
-}
+
