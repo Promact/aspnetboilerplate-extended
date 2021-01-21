@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using CETAutomation.Applications.Dto;
+using CETAutomation.Export;
 using CETAutomation.Masters;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,12 @@ namespace CETAutomation.Application
         /// <returns>List of Projects</returns>
 
         public Task<List<Project>> GetAllProjects();
+
+        /// <summary>
+        /// Method for generation excel
+        /// </summary>
+        /// <returns>FileDto</returns>
+        public Task<FileDto> GetUsersToExcel();
 
 
        

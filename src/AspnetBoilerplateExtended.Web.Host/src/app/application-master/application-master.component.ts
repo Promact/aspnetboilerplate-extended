@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { ApplicationCreateMasterComponent } from '@app/application-create-master/application-create-master.component';
 import { ApplicationEditMasterComponent } from '@app/application-edit-master/application-edit-master.component';
 import { ToastrService } from 'ngx-toastr';
+import { ExcelFileDownloadService } from '@shared/ExcelFileDownloadService/excel-file-download.service';
 
 
 class PagedApplicationRequestDto extends PagedRequestDto{
@@ -34,7 +35,7 @@ export class ApplicationMasterComponent extends PagedListingComponentBase<Applic
     isLoading = false;
 
     constructor(injector: Injector, private _applicationService: ApplicationServiceProxy, private _modalService: BsModalService, private stringConstant: StringConstants,
-        private toaster:ToastrService) {
+        private excelFileDownloadService: ExcelFileDownloadService, private toaster: ToastrService) {
       super(injector);
       this.showNoDataText = this.stringConstant.norecoredFoundMessaage;
 
@@ -150,6 +151,22 @@ protected list(
         this.refresh();
     });
   }
+
+  
+/**
+ * Method exporting file to excel
+ */
+ExportToExcel(): void {
+ 
+    this._applicationService.getUsersToExcel()
+        .subscribe(result => {
+          
+            this.excelFileDownloadService.downloadTempFile(result);
+          });
+  }
+
+
+
 }
 
 

@@ -20,6 +20,10 @@ using Abp.Linq.Extensions;
 using Abp.Timing;
 using System.IO;
 using AspnetBoilerplateExtended;
+using CETAutomation.Export;
+using CETAutomation.CacheStorage;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml;
 
 namespace CETAutomation.Applications
 {
@@ -32,14 +36,18 @@ namespace CETAutomation.Applications
        
         private readonly IRepository<CETAutomation.Masters.Application,int> _applicationRepository;
         private readonly IRepository<Project> _projectRepository;
-        
+        private readonly IFileExport _fileExportService;
+        private readonly ITempFileCacheManager _tempFileCacheManager;
 
         public ApplicationAppService(IRepository<CETAutomation.Masters.Application,int> applicationRepository
-                                    ,IRepository<Project> projectRepository)
+                                    ,IRepository<Project> projectRepository,
+                                     IFileExport fileExportService,
+                                     ITempFileCacheManager tempFileCacheManager)
         {
             _applicationRepository = applicationRepository;
             _projectRepository = projectRepository;
-          
+            _fileExportService = fileExportService;
+            _tempFileCacheManager = tempFileCacheManager;
         }
 
 
@@ -229,7 +237,71 @@ namespace CETAutomation.Applications
         {
             return _projectRepository.GetAllList();
         }
-        
+
+        /// <summary>
+        /// Method for generation excel
+        /// </summary>
+        /// <returns>FileDto</returns>
+        public async Task<FileDto> GetUsersToExcel()
+        {
+            try
+            {
+                //Below code is will fetch data for export which will change as per requirement
+
+                var ApplicationList = _applicationRepository.GetAll().AsNoTracking().Include(x => x.project).ToList();
+                List<ApplicationDto> ApplicationDtoList = new List<ApplicationDto>();
+                if (ApplicationList.Count == 0)
+                {
+                    ApplicationDto reportDto = new ApplicationDto();
+                    ApplicationDtoList.Add(reportDto);
+                }
+
+                ApplicationDtoList = ObjectMapper.Map<List<ApplicationDto>>(ApplicationList);
+
+                ApplicationDtoList.ForEach((x) =>
+                {
+                    x.ApplicationName = (x.Id != 0 && x.ApplicationName != null) ? x.ApplicationName : AppConsts.DashSymbol;
+                    x.ProjectName = (x.Id != 0 && x.project != null) ? x.project.Name : AppConsts.DashSymbol;
+                    x.Time = (x.CreationTime != null) ? x.CreationTime.ToShortDateString() : AppConsts.DashSymbol;
+
+                });
+
+
+                var applicationSortedList = ApplicationDtoList.OrderBy(x => x.CreationTime).ToList();
+
+
+                // Below is File Generation code this will remain same for all export you just need to change parameter of createWorksheetForExcel method while calling.
+
+                string fileName = AppConsts.ExportFilename;
+                string path = Path.GetTempPath();
+                string outputFileName = _fileExportService.CreateFilePath(fileName);
+                fileName = fileName + AppConsts.ExcelFileExtention;
+
+
+                var file = new FileDto(fileName, AppConsts.ExcelFormat);
+
+                using (SpreadsheetDocument package = SpreadsheetDocument.Create(outputFileName, SpreadsheetDocumentType.Workbook))
+                {
+                    _fileExportService.CreateWorksheetForExcel(package, applicationSortedList);
+                }
+
+                var memory = await _fileExportService.GenerateMemoryStream(path, fileName);
+
+
+                _tempFileCacheManager.SetFile(file.FileToken, memory.ToArray());
+                //Delete generate file from server
+                File.Delete(Path.Combine(path, fileName));
+
+                return file;
+
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
+
     }
 
 
