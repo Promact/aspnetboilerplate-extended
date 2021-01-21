@@ -20,7 +20,62 @@ namespace CETAutomation.Application
         Task<PagedResultDto<GetApplicationForViewDto>> GetAllAsync();
 
 
-       
+        /// <summary>
+        /// Method for delete application
+        /// </summary>
+        /// <param name="applicationData">application input</param>
+        /// <returns>Task</returns>
+        public Task DeleteApplicationAsync(EntityDto<int> applicationData);
+
+        /// <summary>
+        /// Method for create or edit application
+        /// </summary>
+        /// <param name="application">CreateOrEditApplicationDto object</param>
+        /// <returns>Task</returns>
+        public Task CreateOrEditAsync(CreateOrEditApplicationDto application);
+
+        /// <summary>
+        /// Method for getting data of application for edit
+        /// </summary>
+        /// <param name="applicationData">id of application</param>
+        /// <returns>application data of given id</returns>
+
+        public Task<GetApplicationForEditOutput> GetApplicationForEditAsync(EntityDto applicationData);
+
+        /// <summary>
+        /// Method for creating application
+        /// </summary>
+        /// <param name="newApplication">CreateOrEditApplicationDto object</param>
+        /// <returns>Task</returns>
+
+        public Task CreateApplicationAsync(CreateOrEditApplicationDto newApplication);
+
+        /// <summary>
+        /// Method for updating application
+        /// </summary>
+        /// <param name="updatedApplication">CreateOrEditApplicationDto object</param>
+        /// <returns>Task</returns>
+
+        public Task UpdateApplicationAsync(CreateOrEditApplicationDto updatedApplication);
+
+        /// <summary>
+        /// Method for getting application data by ID
+        /// </summary>
+        /// <param name="applicationData">object containing applicationId</param>
+        /// <returns>Data of given id</returns>
+
+        public Task<GetApplicationForEditOutput> GetApplicationAsync(EntityDto<int> applicationData);
+
+     
+        /// <summary>
+        /// Method for getting all projects
+        /// </summary>
+        /// <returns>List of Projects</returns>
+
+        public Task<List<Project>> GetAllProjects();
+
+
+
 
 
     }

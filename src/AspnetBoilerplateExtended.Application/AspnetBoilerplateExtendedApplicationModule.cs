@@ -2,6 +2,7 @@
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using AspnetBoilerplateExtended.Authorization;
+using BoilerPlateDemo_App;
 
 namespace AspnetBoilerplateExtended
 {
@@ -13,6 +14,7 @@ namespace AspnetBoilerplateExtended
         public override void PreInitialize()
         {
             Configuration.Authorization.Providers.Add<AspnetBoilerplateExtendedAuthorizationProvider>();
+            Configuration.Modules.AbpAutoMapper().Configurators.Add(CustomDtoMapper.CreateMappings);
         }
 
         public override void Initialize()

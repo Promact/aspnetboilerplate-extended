@@ -18,5 +18,11 @@
         public static string ResetPasswordMailLinkTitle = "Reset Password";
         public static string CheersMessage = "Cheers! ";
         public static string CetAtTeamMessage = "The CET AT Team ";
+        public const string AlphanumericRegex = "^[a-zA-Z0-9][a-zA-Z0-9_@.,()*/#&+-_ ]*$";
+        public const string AlphanumericRegexForDatabase = "^.[a-zA-Z0-9_@.,()*/#&+-_ ]*$";
+        public const string DecimalRegex = @"^[0-9]{0,5}(\.[0-9]{0,2})?$";
+        public const string ApplicationIsAlreadyExist = "Application should be unique";
+        public const string UseOnlyAlphaNumericForApplication = "Application name should be valid.";
+        public const string DoesNotExist = "Application does not exist";
     }
 }

@@ -5,11 +5,12 @@
                 <div class="col-6 row">
                     <h1 class="bold">{{ "Application Name" | localize }}</h1>
                    
-          
-           
                 </div>
                 <div class="col-6 text-right">
-                  
+                    <a href="javascript:;" class="btn btn-primary medium" (click)="createApplication()" >
+                        <i class="fa fa-plus-square"></i>
+                        {{ "Create" | localize }}
+                    </a>
                     
 
                 </div>
@@ -34,6 +35,7 @@
                             <tr>
                                 <th class="medium text-center">{{ "Application Name" | localize }}</th>
                                 <th class="medium text-center">{{ "Created Date" | localize }}</th>
+                                <th class="medium text-center action-width">{{ "Actions" | localize }}</th>
                                
                             </tr>
                         </thead>
@@ -54,6 +56,23 @@
 
                                 <td class="text-center"  placement="right" container="body">{{app.application.applicationName}}</td>
                                 <td class="text-center">{{app.application.creationTime|date:'M/d/yy, h:mm a'}}</td>
+                                <td class="text-center">
+
+                                    <button type="button"
+                                            class="btn btn-sm btn-table-action"
+                                            (click)="editApplication(app.application)"
+                                            tooltip="Edit" placement="top" container="body">
+                                        <i class="fas fa-pencil-alt" ></i>
+                                        <i class="fas fa-eye" ></i>
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-sm btn-table-action ml-2"
+                                            (click)="delete(app.application)" 
+                                            tooltip="Delete" placement="top" container="body">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+
+                                </td>
                                
                             </tr>
                         </tbody>
