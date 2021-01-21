@@ -1277,6 +1277,176 @@ export class UserServiceProxy {
     }
 
     /**
+     * @param displayName (optional) 
+     * @param emailSubject (optional) 
+     * @param emailBody (optional) 
+     * @param emailAddress (optional) 
+     * @return Success
+     */
+    sendMail(displayName: string | null | undefined, emailSubject: string | null | undefined, emailBody: string | null | undefined, emailAddress: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/User/SendMail?";
+        if (displayName !== undefined && displayName !== null)
+            url_ += "DisplayName=" + encodeURIComponent("" + displayName) + "&";
+        if (emailSubject !== undefined && emailSubject !== null)
+            url_ += "emailSubject=" + encodeURIComponent("" + emailSubject) + "&";
+        if (emailBody !== undefined && emailBody !== null)
+            url_ += "emailBody=" + encodeURIComponent("" + emailBody) + "&";
+        if (emailAddress !== undefined && emailAddress !== null)
+            url_ += "emailAddress=" + encodeURIComponent("" + emailAddress) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processSendMail(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSendMail(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processSendMail(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getEmailOfUserForResetPassword(email: string): Observable<string> {
+        let url_ = this.baseUrl + "/api/services/app/User/GetEmailOfUserForResetPassword?";
+        if (email === undefined || email === null)
+            throw new Error("The parameter 'email' must be defined and cannot be null.");
+        else
+            url_ += "Email=" + encodeURIComponent("" + email) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEmailOfUserForResetPassword(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEmailOfUserForResetPassword(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetEmailOfUserForResetPassword(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    resetPasswordOfUser(body: ResetPasswordFromLinkDto | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/User/ResetPasswordOfUser";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processResetPasswordOfUser(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processResetPasswordOfUser(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processResetPasswordOfUser(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
@@ -3730,6 +3900,57 @@ export interface IExternalAuthenticateResultModel {
     encryptedAccessToken: string | undefined;
     expireInSeconds: number;
     waitingForActivation: boolean;
+}
+
+export class ResetPasswordFromLinkDto implements IResetPasswordFromLinkDto {
+    passwordToken: string;
+    newPassword: string;
+    confirmPassword: string;
+
+    constructor(data?: IResetPasswordFromLinkDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.passwordToken = _data["passwordToken"];
+            this.newPassword = _data["newPassword"];
+            this.confirmPassword = _data["confirmPassword"];
+        }
+    }
+
+    static fromJS(data: any): ResetPasswordFromLinkDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResetPasswordFromLinkDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["passwordToken"] = this.passwordToken;
+        data["newPassword"] = this.newPassword;
+        data["confirmPassword"] = this.confirmPassword;
+        return data; 
+    }
+
+    clone(): ResetPasswordFromLinkDto {
+        const json = this.toJSON();
+        let result = new ResetPasswordFromLinkDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IResetPasswordFromLinkDto {
+    passwordToken: string;
+    newPassword: string;
+    confirmPassword: string;
 }
 
 export class CreateUserDto implements ICreateUserDto {
