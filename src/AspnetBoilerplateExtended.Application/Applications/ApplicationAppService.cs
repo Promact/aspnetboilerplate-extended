@@ -222,7 +222,7 @@ namespace CETAutomation.Applications
         {
             return _projectRepository.GetAllList();
         }
-
+        
     }
 
 

@@ -22,8 +22,8 @@ class PagedApplicationRequestDto extends PagedRequestDto{
   styleUrls: ['./application-master.component.css']
 })
 export class ApplicationMasterComponent extends PagedListingComponentBase<ApplicationDto> {
-    
-    applications: GetApplicationForViewDto[] = [];
+ 
+  applications: GetApplicationForViewDto[] = [];
     
    
     showNoDataText = '';
@@ -65,7 +65,7 @@ protected list(
             
         });
 
-    }
+}
 
         /**
      * Method to delete application
@@ -85,7 +85,7 @@ protected list(
             }
         );
     }
-  
+   
     /**
     * Method to display create master dialog 
     */
@@ -100,8 +100,8 @@ protected list(
    editApplication(application: ApplicationDto): void {
     this.showCreateOrEditMasterDialog(application.id);
 }
-  
-  
+
+
   /**
    * Method for toggling create abd edit dialog of master 
    */
@@ -136,6 +136,7 @@ protected list(
 
 
    
+
 
 
 
