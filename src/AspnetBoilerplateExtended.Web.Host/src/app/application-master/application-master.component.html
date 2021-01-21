@@ -5,12 +5,15 @@
                 <div class="col-6 row">
                     <h1 class="bold">{{ "Application Name" | localize }}</h1>
                    
+          
+           
                 </div>
                 <div class="col-6 text-right">
                     <a href="javascript:;" class="btn btn-primary medium" (click)="createApplication()" >
                         <i class="fa fa-plus-square"></i>
                         {{ "Create" | localize }}
                     </a>
+                  
                     
 
                 </div>
@@ -54,7 +57,7 @@
                         }
                 ">
 
-                                <td class="text-center"  placement="right" container="body">{{app.application.applicationName}}</td>
+                                <td class="text-center"  tooltip="{{app.application.applicationName}}"  placement="right" container="body">{{app.application.applicationName}}</td>
                                 <td class="text-center">{{app.application.creationTime|date:'M/d/yy, h:mm a'}}</td>
                                 <td class="text-center">
 
