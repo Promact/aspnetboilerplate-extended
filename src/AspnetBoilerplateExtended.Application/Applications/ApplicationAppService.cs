@@ -67,8 +67,9 @@ namespace CETAutomation.Applications
                                    {
                                        ApplicationName = o.ApplicationName,
                                        Id = o.Id,
-                                       ProjectId = o.ProjectId,
-                                       CreationTime = o.CreationTime.ToLocalTime(),
+                                       ProjectId=o.ProjectId,
+                                      //ToLocalTime() will convert time to local time zone 
+                                       CreationTime = o.CreationTime,
                                    }
                                };
 
@@ -150,6 +151,7 @@ namespace CETAutomation.Applications
 
             if (isMatch)
             {
+                application.CreationTime = Clock.Now;
                 await _applicationRepository.InsertAsync(application);
             }
             else

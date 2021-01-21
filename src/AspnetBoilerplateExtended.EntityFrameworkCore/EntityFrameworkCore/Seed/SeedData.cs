@@ -1,4 +1,5 @@
-﻿using AspnetBoilerplateExtended.EntityFrameworkCore;
+﻿using Abp.Timing;
+using AspnetBoilerplateExtended.EntityFrameworkCore;
 using CETAutomation.Masters;
 using System;
 using System.Collections.Generic;
@@ -35,13 +36,13 @@ namespace CETAutomation.EntityFrameworkCore.Seed
                   
                 
                   new Project{
-                  Name="Project1", CreationTime=DateTime.Now, CreatorUserId=1,IsDeleted=false },
+                  Name="Project1", CreationTime=Clock.Now, CreatorUserId=1,IsDeleted=false },
                   new Project{
-                  Name="Project2", CreationTime=DateTime.Now, CreatorUserId=1,IsDeleted=false },
+                  Name="Project2", CreationTime=Clock.Now, CreatorUserId=1,IsDeleted=false },
                   new Project{
-                  Name="Project3", CreationTime=DateTime.Now, CreatorUserId=1,IsDeleted=false },
+                  Name="Project3", CreationTime=Clock.Now, CreatorUserId=1,IsDeleted=false },
                 new Project{
-                  Name="Project4", CreationTime=DateTime.Now, CreatorUserId=1,IsDeleted=false },
+                  Name="Project4", CreationTime=Clock.Now, CreatorUserId=1,IsDeleted=false },
 
 
                     };
