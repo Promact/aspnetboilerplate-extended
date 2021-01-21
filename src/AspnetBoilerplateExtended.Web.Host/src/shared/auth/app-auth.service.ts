@@ -50,6 +50,7 @@ export class AppAuthService {
                 })
             )
             .subscribe((result: AuthenticateResultModel) => {
+                localStorage.setItem('LoggedInUserId',result.userId.toString());
                 this.processAuthenticateResult(result);
             });
     }
