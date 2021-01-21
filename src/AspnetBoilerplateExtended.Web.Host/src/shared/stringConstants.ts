@@ -29,5 +29,6 @@ export class StringConstants {
     applicationSelectedRoute = '/masters/applications';
     deleteWarningMessage = ' Are you sure you want to delete this?';
     applicationDeleteMessage = 'Application Name deleted successfully';
+    applicatoinRoute='/app/application';
 
 }

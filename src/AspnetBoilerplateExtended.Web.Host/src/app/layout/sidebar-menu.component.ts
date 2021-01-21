@@ -9,6 +9,7 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { MenuItem } from '@shared/layout/menu-item';
+import { StringConstants } from '@shared/stringConstants';
 
 @Component({
   selector: 'sidebar-menu',
@@ -21,7 +22,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
   routerEvents: BehaviorSubject<RouterEvent> = new BehaviorSubject(undefined);
   homeRoute = '/app/home';
 
-  constructor(injector: Injector, private router: Router) {
+  constructor(injector: Injector, private router: Router,private stringConstant:StringConstants) {
     super(injector);
     this.router.events.subscribe(this.routerEvents);
   }
@@ -59,6 +60,12 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
       new MenuItem(
         this.l('Roles'),
         '/app/roles',
+        'fas fa-theater-masks',
+        'Pages.Roles'
+      ),
+      new MenuItem(
+        this.l('Application'),
+        this.stringConstant.applicatoinRoute,
         'fas fa-theater-masks',
         'Pages.Roles'
       ),

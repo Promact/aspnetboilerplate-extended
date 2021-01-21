@@ -27,4 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AspnetBoilerplateExtended.Core\AspnetBoilerplateExtended.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
 </Project>
