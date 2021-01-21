@@ -141,6 +141,69 @@ export class AccountServiceProxy {
 }
 
 @Injectable()
+export class ApplicationServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAll(): Observable<GetApplicationForViewDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Application/GetAll";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<GetApplicationForViewDtoPagedResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetApplicationForViewDtoPagedResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<GetApplicationForViewDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetApplicationForViewDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetApplicationForViewDtoPagedResultDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class ConfigurationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -2138,6 +2201,250 @@ export class RegisterOutput implements IRegisterOutput {
 
 export interface IRegisterOutput {
     canLogin: boolean;
+}
+
+export class Project implements IProject {
+    name: string | undefined;
+    description: string | undefined;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: number;
+
+    constructor(data?: IProject) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.isDeleted = _data["isDeleted"];
+            this.deleterUserId = _data["deleterUserId"];
+            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): Project {
+        data = typeof data === 'object' ? data : {};
+        let result = new Project();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Project {
+        const json = this.toJSON();
+        let result = new Project();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProject {
+    name: string | undefined;
+    description: string | undefined;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: number;
+}
+
+export class ApplicationDto implements IApplicationDto {
+    id: number;
+    applicationName: string;
+    projectId: number;
+    projectName: string;
+    creationTime: moment.Moment;
+    project: Project;
+    time: string | undefined;
+
+    constructor(data?: IApplicationDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.applicationName = _data["applicationName"];
+            this.projectId = _data["projectId"];
+            this.projectName = _data["projectName"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.project = _data["project"] ? Project.fromJS(_data["project"]) : <any>undefined;
+            this.time = _data["time"];
+        }
+    }
+
+    static fromJS(data: any): ApplicationDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApplicationDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["applicationName"] = this.applicationName;
+        data["projectId"] = this.projectId;
+        data["projectName"] = this.projectName;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["project"] = this.project ? this.project.toJSON() : <any>undefined;
+        data["time"] = this.time;
+        return data; 
+    }
+
+    clone(): ApplicationDto {
+        const json = this.toJSON();
+        let result = new ApplicationDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IApplicationDto {
+    id: number;
+    applicationName: string;
+    projectId: number;
+    projectName: string;
+    creationTime: moment.Moment;
+    project: Project;
+    time: string | undefined;
+}
+
+export class GetApplicationForViewDto implements IGetApplicationForViewDto {
+    application: ApplicationDto;
+
+    constructor(data?: IGetApplicationForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.application = _data["application"] ? ApplicationDto.fromJS(_data["application"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetApplicationForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetApplicationForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["application"] = this.application ? this.application.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): GetApplicationForViewDto {
+        const json = this.toJSON();
+        let result = new GetApplicationForViewDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetApplicationForViewDto {
+    application: ApplicationDto;
+}
+
+export class GetApplicationForViewDtoPagedResultDto implements IGetApplicationForViewDtoPagedResultDto {
+    totalCount: number;
+    items: GetApplicationForViewDto[] | undefined;
+
+    constructor(data?: IGetApplicationForViewDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(GetApplicationForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): GetApplicationForViewDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetApplicationForViewDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): GetApplicationForViewDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new GetApplicationForViewDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetApplicationForViewDtoPagedResultDto {
+    totalCount: number;
+    items: GetApplicationForViewDto[] | undefined;
 }
 
 export class ChangeUiThemeInput implements IChangeUiThemeInput {

@@ -38,9 +38,11 @@ import { SidebarComponent } from './layout/sidebar.component';
 import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
+import { ApplicationServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ApplicationMasterComponent} from '../app/application-master/application-master.component'
+import { StringConstants } from '@shared/stringConstants';
 import { UpdateUserDetailsComponent } from './update-user-details/update-user-details.component';
 import { UserUpdateDetailsServiceProxy } from '@shared/service-proxies/service-proxies';
-import { StringConstants } from '@shared/stringConstants';
 
 @NgModule({
   declarations: [
@@ -71,6 +73,7 @@ import { StringConstants } from '@shared/stringConstants';
     SidebarLogoComponent,
     SidebarUserPanelComponent,
     SidebarMenuComponent,
+    ApplicationMasterComponent,
     UpdateUserDetailsComponent
   ],
   imports: [
@@ -88,7 +91,7 @@ import { StringConstants } from '@shared/stringConstants';
     SharedModule,
     NgxPaginationModule,
   ],
-  providers: [UserUpdateDetailsServiceProxy,StringConstants],
+    providers: [ApplicationServiceProxy, StringConstants, UserUpdateDetailsServiceProxy],
   entryComponents: [
     // tenants
     CreateTenantDialogComponent,

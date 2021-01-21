@@ -1,0 +1,88 @@
+<div>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6 row">
+                    <h1 class="bold">{{ "Application Name" | localize }}</h1>
+                   
+          
+           
+                </div>
+                <div class="col-6 text-right">
+                  
+                    
+
+                </div>
+            </div>
+        </div>
+      
+    </section>
+    <section class="content px-2">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="input-group">
+                        
+                        <div class="input-group-append">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-bordered table-hover text-nowrap" [busy]="isTableLoading">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="medium text-center">{{ "Application Name" | localize }}</th>
+                                <th class="medium text-center">{{ "Created Date" | localize }}</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="applications.length===0">
+                                <td colspan="3"><p class="no-record">{{showNoDataText}}</p></td>
+                            </tr>
+                            <tr *ngFor="
+                  let app of applications
+                    | paginate
+                      : {
+                          id: 'server',
+                          itemsPerPage: pageSize,
+                          currentPage: pageNumber,
+                          totalItems: totalItems
+                        }
+                ">
+
+                                <td class="text-center"  placement="right" container="body">{{app.application.applicationName}}</td>
+                                <td class="text-center">{{app.application.creationTime|date:'M/d/yy, h:mm a'}}</td>
+                               
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer bg-light border-top">
+                    <div class="row">
+                        <div class="col-sm-4 col-12 text-left mb-1 mb-sm-0">
+                            <button class="btn btn-secondary btn-table-action" (click)="refresh()">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-4 col-12 text-center">
+                            <p class="mb-0 my-2">
+                                {{ "TotalRecordsCount" | localize: totalItems }}
+                            </p>
+                        </div>
+                        <div class="col-sm-4 col-12">
+                            <div class="float-sm-right m-auto">
+                                <abp-pagination-controls id="server"
+                                                         (pageChange)="getDataPage($event)">
+                                </abp-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
