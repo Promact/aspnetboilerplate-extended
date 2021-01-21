@@ -11,6 +11,10 @@
     <RootNamespace>AspnetBoilerplateExtended</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.10.1" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\AspnetBoilerplateExtended.Core\AspnetBoilerplateExtended.Core.csproj" />
+    <ProjectReference Include="..\AspnetBoilerplateExtended.EntityFrameworkCore\AspnetBoilerplateExtended.EntityFrameworkCore.csproj" />
   </ItemGroup>
 </Project>
