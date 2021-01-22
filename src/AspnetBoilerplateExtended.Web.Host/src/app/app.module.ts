@@ -53,6 +53,9 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 //FileDownload
 import{ExcelFileDownloadService} from 'shared/ExcelFileDownloadService/excel-file-download.service';
 
+//404Page
+import {ErrorPageComponent} from 'app/error-page/error-page.component';
+import { from } from 'rxjs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,9 +88,8 @@ import{ExcelFileDownloadService} from 'shared/ExcelFileDownloadService/excel-fil
     ApplicationMasterComponent,
     ApplicationCreateMasterComponent,
     ApplicationEditMasterComponent,
-
-
     UpdateUserDetailsComponent,
+    ErrorPageComponent,
 
   ],
   imports: [

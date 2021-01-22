@@ -10,6 +10,7 @@ import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { UpdateUserDetailsComponent } from './update-user-details/update-user-details.component';
 import { ApplicationMasterComponent } from './application-master/application-master.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import { ApplicationMasterComponent } from './application-master/application-mas
                     { path: 'application', component: ApplicationMasterComponent },
                     { path: 'application/:id', component: ApplicationMasterComponent },
                     { path: 'update-details', component: UpdateUserDetailsComponent },
+                    { path: 'unauthorized',component:ErrorPageComponent}
 
                 ]
             }

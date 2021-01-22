@@ -174,8 +174,45 @@ For delete permission
 
 # **Design**
 
+# **Design**
+ 
 ## **Show 404 page when user trying to access the page for which he does not have rights**
 -------------
+ 
+**Purpose:**
+Main purpose of this functionality is to prevent unauthorized access. It will show error page when ever user does not have permission to access that resource.
+ 
+**Description:**
+To add this you need to create component and check for permissoin using `abp.IsGranted("Permissionname")` and navigate user accordingly.Follow below steps for detiled explaination.
+ 
+ - Step-1:Copy `error-page` directory in anugular `app` directory.`error-page` directory consist `ts` and `HTML` file for error page.
+ 
+ - Step-2:Add boolean variable into component to map with the permission just like `isviewGranted` in `Application-master-component.ts` like below.
+    ````
+    isCreateGranted = false;
+    isEditGranted = false;
+    isDeleteGranted = false;
+    isViewGranted = false;
+    ````
+ - Step-3:Add 404 Component route in [app-routing.module.ts](https://github.com/Promact/aspnetboilerplate-extended/blob/master-new/src/AspnetBoilerplateExtended.Web.Host/src/app/app-routing.module.ts)   
+    ````
+    { path: 'unauthorized',component:ErrorPageComponent}
+    ````
+ - Step-4:Check the permission status using `abp.auth.isGranted()` method it will return boolean and chec for permission using condition statment and navigate to `404-component` if does not satisfy condition. for example
+    ````
+    constructor(private _router:Router){
+ 
+    
+      this.isCreateGranted = abp.auth.isGranted(this.stringConstant.applicationCreatePermission);
+      this.isEditGranted = abp.auth.isGranted(this.stringConstant.applicationEditPermission);
+      this.isDeleteGranted = abp.auth.isGranted(this.stringConstant.applicationDeletePermission);
+      this.isViewGranted = abp.auth.isGranted(this.stringConstant.applicationViewPermission);
+ 
+        if(!this.isViewGranted){
+          this._router.navigate(["/app/unauthorized"])
+      }
+        }
+    ````
 
 
 ## **Set tooltip on list pages**

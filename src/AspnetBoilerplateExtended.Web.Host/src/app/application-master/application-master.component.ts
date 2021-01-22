@@ -8,6 +8,7 @@ import { ApplicationCreateMasterComponent } from '@app/application-create-master
 import { ApplicationEditMasterComponent } from '@app/application-edit-master/application-edit-master.component';
 import { ToastrService } from 'ngx-toastr';
 import { ExcelFileDownloadService } from '@shared/ExcelFileDownloadService/excel-file-download.service';
+import { Router } from '@angular/router';
 
 
 class PagedApplicationRequestDto extends PagedRequestDto{
@@ -37,13 +38,21 @@ export class ApplicationMasterComponent extends PagedListingComponentBase<Applic
     isEditGranted = false;
     isDeleteGranted = false;
     isViewGranted = false;
-    constructor(injector: Injector, private _applicationService: ApplicationServiceProxy, private _modalService: BsModalService, private stringConstant: StringConstants) {
+    constructor(injector: Injector, private _applicationService: ApplicationServiceProxy, private _modalService: BsModalService, private stringConstant: StringConstants,
+                private _router:Router,private toaster:ToastrService,private excelFileDownloadService:ExcelFileDownloadService) {
       super(injector);
-        this.showNoDataText = this.stringConstant.norecoredFoundMessaage;
-        this.isCreateGranted = abp.auth.isGranted(this.stringConstant.applicationCreatePermission);
-        this.isEditGranted = abp.auth.isGranted(this.stringConstant.applicationEditPermission);
-        this.isDeleteGranted = abp.auth.isGranted(this.stringConstant.applicationDeletePermission);
-        this.isViewGranted = abp.auth.isGranted(this.stringConstant.applicationViewPermission);
+      this.showNoDataText = this.stringConstant.norecoredFoundMessaage;
+      this.isViewGranted=abp.auth.isGranted(stringConstant.applicationViewPermission);
+      this.isCreateGranted = abp.auth.isGranted(this.stringConstant.applicationCreatePermission);
+      this.isEditGranted = abp.auth.isGranted(this.stringConstant.applicationEditPermission);
+      this.isDeleteGranted = abp.auth.isGranted(this.stringConstant.applicationDeletePermission);
+    
+
+
+      if(!this.isViewGranted){
+        this._router.navigate(["/app/unauthorized"])
+    }
+
     }
 
  

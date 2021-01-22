@@ -9,7 +9,7 @@
            
                 </div>
                 <div class="col-6 text-right">
-                    <a href="javascript:;" class="btn btn-primary medium" (click)="createApplication()" *ngIf="isCreateGranted">
+                    <a href="javascript:;" class="btn btn-primary medium" (click)="createApplication()" *ngIf="isCreateGranted" >
                         <i class="fa fa-plus-square"></i>
                         {{ "Create" | localize }}
                     </a>&nbsp;
@@ -73,8 +73,8 @@
                                             class="btn btn-sm btn-table-action"
                                             (click)="editApplication(app.application)"
                                             tooltip="Edit" placement="top" container="body">
-                                        <i class="fas fa-pencil-alt" [hidden]="!isEditGranted"></i>
-                                        <i class="fas fa-eye" [hidden]="isEditGranted && isViewGranted"></i>
+                                        <i class="fas fa-pencil-alt" *ngIf="isEditGranted" ></i>
+                                        <i class="fas fa-eye"*ngIf="!isEditGranted && isViewGranted" ></i>
                                     </button>
                                     <button type="button"
                                             class="btn btn-sm btn-table-action ml-2"

@@ -24,10 +24,13 @@ using CETAutomation.Export;
 using CETAutomation.CacheStorage;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml;
+using AspnetBoilerplateExtended.Authorization;
 
 namespace CETAutomation.Applications
 {
-    
+
+
+    [AbpAuthorize(PermissionNames.Pages_Applications)]
 
     public class ApplicationAppService : AspnetBoilerplateExtendedAppServiceBase, IApplicationAppService
 
@@ -59,7 +62,7 @@ namespace CETAutomation.Applications
         /// </summary>
         /// <param name="pageFormatData">GetAllApplicationInput object </param>
         /// <returns>All application data with paged result</returns>
-
+        [AbpAuthorize(PermissionNames.Pages_Applications_View)]
         public async Task<PagedResultDto<GetApplicationForViewDto>> GetAllAsync(GetAllApplicationInput pageFormatData)
         {
 
@@ -97,6 +100,7 @@ namespace CETAutomation.Applications
         /// <param name="applicationData">applicationData Dto containing Id</param>
         /// <returns>Data of given id</returns>
 
+        [AbpAuthorize(PermissionNames.Pages_Applications_View)]
         public async Task<GetApplicationForEditOutput> GetApplicationAsync(EntityDto<int> applicationData)
         {
             var app = await _applicationRepository.FirstOrDefaultAsync(applicationData.Id);
@@ -112,6 +116,7 @@ namespace CETAutomation.Applications
         /// <param name="updatedApplication">CreateOrEditApplicationDto object</param>
         /// <returns>Task</returns>
 
+        [AbpAuthorize(PermissionNames.Pages_Applications_Edit)]
         public async Task UpdateApplicationAsync(CreateOrEditApplicationDto updatedApplication)
         {
             if (await _applicationRepository.GetAll().AnyAsync(x => x.Id != updatedApplication.Id && x.ApplicationName.Trim().ToLower().Equals(updatedApplication.ApplicationName.Trim().ToLower())))
@@ -138,11 +143,12 @@ namespace CETAutomation.Applications
         }
 
         /// <summary>
-        /// Method for creating application
+        /// Method for creating application 
         /// </summary>
         /// <param name="newApplication">CreateOrEditApplicationDto object</param>
         /// <returns>Task</returns>
 
+        [AbpAuthorize(PermissionNames.Pages_Applications_Create)]
         public async Task CreateApplicationAsync(CreateOrEditApplicationDto newApplication)
         {
             if (await _applicationRepository.GetAll().AnyAsync(x => x.ApplicationName.Trim().ToLower().Equals(newApplication.ApplicationName.Trim().ToLower())))
@@ -211,6 +217,7 @@ namespace CETAutomation.Applications
         /// <param name="applicationData">application input</param>
         /// <returns>Task</returns>
 
+        [AbpAuthorize(PermissionNames.Pages_Applications_Delete)]
         public async Task DeleteApplicationAsync(EntityDto<int> applicationData)
         {
             var app = _applicationRepository.FirstOrDefault(x => x.Id == applicationData.Id);
@@ -242,6 +249,7 @@ namespace CETAutomation.Applications
         /// Method for generation excel
         /// </summary>
         /// <returns>FileDto</returns>
+        [AbpAuthorize(PermissionNames.Pages_Applications_View)]
         public async Task<FileDto> GetUsersToExcel()
         {
             try
