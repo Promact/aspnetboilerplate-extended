@@ -16,8 +16,9 @@ namespace CETAutomation.Application
         /// <summary>
         /// Method for getting all application data
         /// </summary>
+        /// <param name="pageFormatData">GetAllApplicationInput object </param>
         /// <returns>All application data with paged result</returns>
-        Task<PagedResultDto<GetApplicationForViewDto>> GetAllAsync();
+        public Task<PagedResultDto<GetApplicationForViewDto>> GetAllAsync(GetAllApplicationInput pageFormatData);
 
 
         /// <summary>

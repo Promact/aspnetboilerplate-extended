@@ -23,10 +23,12 @@ class PagedApplicationRequestDto extends PagedRequestDto{
   styleUrls: ['./application-master.component.css']
 })
 export class ApplicationMasterComponent extends PagedListingComponentBase<ApplicationDto> {
- 
-  applications: GetApplicationForViewDto[] = [];
     
-   
+    applications: GetApplicationForViewDto[] = [];
+    keyword = '';
+    advancedFiltersVisible = false;
+    filterText = '';
+    nameFilter = '';
     showNoDataText = '';
     selectedApplication:number;
     isLoading = false;
@@ -52,11 +54,17 @@ protected list(
     finishedCallback: Function
 ): void {
     this.isLoading = true;
-    
+    request.keyword=this.keyword;
 
 
     this._applicationService
-        .getAll()
+        .getAll(
+            this.filterText,
+            request.keyword,
+            request.sorting,
+            request.skipCount,
+            request.maxResultCount,
+        )
         .pipe(
             finalize(() => {
                 finishedCallback();
@@ -70,7 +78,15 @@ protected list(
 
     }
 
-        /**
+    /**
+    * Method for using clear filters
+    */
+   clearFilters(): void {
+    this.keyword = '';
+    this.getDataPage(1);
+}
+
+    /**
      * Method to delete application
      * @param app : Application to be deleted
      */
