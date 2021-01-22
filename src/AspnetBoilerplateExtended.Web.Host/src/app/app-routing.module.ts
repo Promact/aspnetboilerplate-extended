@@ -25,6 +25,7 @@ import { ApplicationMasterComponent } from './application-master/application-mas
                     { path: 'about', component: AboutComponent },
                     { path: 'update-password', component: ChangePasswordComponent },
                     { path: 'application', component: ApplicationMasterComponent },
+                    { path: 'application/:id', component: ApplicationMasterComponent },
                     { path: 'update-details', component: UpdateUserDetailsComponent },
 
                 ]
