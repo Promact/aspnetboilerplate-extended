@@ -24,5 +24,10 @@
         public const string ApplicationIsAlreadyExist = "Application should be unique";
         public const string UseOnlyAlphaNumericForApplication = "Application name should be valid.";
         public const string DoesNotExist = "Application does not exist";
+        public const string DashSymbol = "-";
+        public const string ExcelFileExtention = ".xlsx";
+        public const string ExportFilename = "ExportedFile";
+        public static string ExcelFormat = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        public static string FileNotExistMessage = "File does not exists";
     }
 }

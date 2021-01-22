@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <VersionPrefix>1.0.0.0</VersionPrefix>
     <TargetFramework>net5.0</TargetFramework>
@@ -11,6 +11,7 @@
     <RootNamespace>AspnetBoilerplateExtended</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.12.1" />
     <PackageReference Include="MailKit" Version="2.10.1" />
   </ItemGroup>
   <ItemGroup>

@@ -50,6 +50,8 @@ import { ApplicationEditMasterComponent} from '../app/application-edit-master/ap
 import { NgSelectModule } from '@ng-select/ng-select';
 //ToasterModule
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+//FileDownload
+import{ExcelFileDownloadService} from 'shared/ExcelFileDownloadService/excel-file-download.service';
 
 @NgModule({
   declarations: [
@@ -112,7 +114,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     }),
     TooltipModule.forRoot(),
   ],
-    providers: [ApplicationServiceProxy, StringConstants, UserUpdateDetailsServiceProxy,ToastrService],
+    providers: [ApplicationServiceProxy, StringConstants, UserUpdateDetailsServiceProxy, ToastrService, ExcelFileDownloadService],
   entryComponents: [
     // tenants
     CreateTenantDialogComponent,

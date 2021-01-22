@@ -19,6 +19,7 @@ using Abp.Dependency;
 using Abp.Json;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using CETAutomation.Export;
 
 namespace AspnetBoilerplateExtended.Web.Host.Startup
 {
@@ -57,6 +58,8 @@ namespace AspnetBoilerplateExtended.Web.Host.Startup
             AuthConfigurer.Configure(services, _appConfiguration);
 
             services.AddSignalR();
+            //File Export dependecies injection
+            services.AddScoped<IFileExport, FileExport>();
 
             // Configure CORS for angular2 UI
             services.AddCors(
