@@ -3,7 +3,7 @@ import { finalize } from 'rxjs/operators';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ApplicationServiceProxy, CreateOrEditApplicationDto, Project} from '../../shared/service-proxies/service-proxies'
 import { StringConstants } from '@shared/stringConstants';
-import { NotifyService } from 'abp-ng2-module';
+import { ToastrService } from 'ngx-toastr'
 
 
 
@@ -22,7 +22,7 @@ export class ApplicationCreateMasterComponent implements OnInit {
   constructor(  private _applicationService: ApplicationServiceProxy,
                 private stringConstants:StringConstants,
                 public bsModalRef: BsModalRef,
-                private notify: NotifyService,
+                private toaster:ToastrService,
                 ) { }
 
   ngOnInit(): void {
@@ -50,7 +50,7 @@ export class ApplicationCreateMasterComponent implements OnInit {
                   })
               )
               .subscribe(() => {
-                  this.notify.info((this.stringConstants.applicationAddMessage));
+                  this.toaster.info((this.stringConstants.applicationAddMessage));
                   this.bsModalRef.hide();
                   this.onSave.emit();
                   this.isLoading = false;

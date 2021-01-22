@@ -6,6 +6,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 import { ApplicationCreateMasterComponent } from '@app/application-create-master/application-create-master.component';
 import { ApplicationEditMasterComponent } from '@app/application-edit-master/application-edit-master.component';
+import { ToastrService } from 'ngx-toastr';
 
 
 class PagedApplicationRequestDto extends PagedRequestDto{
@@ -30,9 +31,11 @@ export class ApplicationMasterComponent extends PagedListingComponentBase<Applic
     selectedApplication:number;
     isLoading = false;
 
-    constructor(injector: Injector, private _applicationService: ApplicationServiceProxy, private _modalService: BsModalService, private stringConstant: StringConstants) {
+    constructor(injector: Injector, private _applicationService: ApplicationServiceProxy, private _modalService: BsModalService, private stringConstant: StringConstants,
+        private toaster:ToastrService) {
       super(injector);
       this.showNoDataText = this.stringConstant.norecoredFoundMessaage;
+
     }
 
  
@@ -65,7 +68,7 @@ protected list(
             
         });
 
-}
+    }
 
         /**
      * Method to delete application
@@ -78,14 +81,14 @@ protected list(
             (result: boolean) => {
                 if (result) {
                     this._applicationService.deleteApplication(app.id).subscribe(() => {
-                        this.notify.success(this.l(this.stringConstant.applicationDeleteMessage));
+                        this.toaster.success(this.l(this.stringConstant.applicationDeleteMessage));
                         this.refresh();
                     });
                 }
             }
         );
     }
-   
+  
     /**
     * Method to display create master dialog 
     */
@@ -100,8 +103,8 @@ protected list(
    editApplication(application: ApplicationDto): void {
     this.showCreateOrEditMasterDialog(application.id);
 }
-
-
+  
+  
   /**
    * Method for toggling create abd edit dialog of master 
    */
@@ -136,7 +139,6 @@ protected list(
 
 
    
-
 
 
 

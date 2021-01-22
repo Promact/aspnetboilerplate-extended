@@ -48,6 +48,8 @@ import { ApplicationCreateMasterComponent} from '../app/application-create-maste
 import { ApplicationEditMasterComponent} from '../app/application-edit-master/application-edit-master.component';
 // ng-Select
 import { NgSelectModule } from '@ng-select/ng-select';
+//ToasterModule
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -100,11 +102,17 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,
-    TooltipModule.forRoot(),
     //Ngselect
-    NgSelectModule
+    NgSelectModule,
+      //Toaster
+      ToastrModule.forRoot({
+        timeOut: 3000,
+        positionClass: 'toast-top-right',
+        preventDuplicates: true,
+    }),
+    TooltipModule.forRoot(),
   ],
-    providers: [ApplicationServiceProxy, StringConstants, UserUpdateDetailsServiceProxy],
+    providers: [ApplicationServiceProxy, StringConstants, UserUpdateDetailsServiceProxy,ToastrService],
   entryComponents: [
     // tenants
     CreateTenantDialogComponent,

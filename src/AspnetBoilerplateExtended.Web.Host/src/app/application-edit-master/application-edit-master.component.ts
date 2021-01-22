@@ -4,6 +4,7 @@ import { ApplicationServiceProxy, CreateOrEditApplicationDto, GetApplicationForE
 import { StringConstants } from '@shared/stringConstants';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
+import {ToastrService} from 'ngx-toastr'
 
 @Component({
   selector: 'app-application-edit-master',
@@ -25,6 +26,7 @@ export class ApplicationEditMasterComponent extends AppComponentBase implements 
     injector: Injector,
     public _applicationService: ApplicationServiceProxy,
     public bsModalRef: BsModalRef, private stringConstants: StringConstants,
+    public toaster:ToastrService
 
   ) {
     super(injector);
@@ -69,7 +71,7 @@ export class ApplicationEditMasterComponent extends AppComponentBase implements 
                 })
             )
             .subscribe(() => {
-                this.notify.info(this.l(this.stringConstants.applicationEditMessage));
+                this.toaster.info(this.l(this.stringConstants.applicationEditMessage));
                 this.bsModalRef.hide();
                 this.onSave.emit();
                 this.isLoading = false;
