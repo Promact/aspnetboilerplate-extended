@@ -5,8 +5,11 @@
                 <div class="col-6 row">
                     <h1 class="bold">{{ "Application Name" | localize }}</h1>
                    
+          
+           
                 </div>
                 <div class="col-6 text-right">
+                  
                     <a href="javascript:;" class="btn btn-primary medium" (click)="createApplication()" >
                         <i class="fa fa-plus-square"></i>
                         {{ "Create" | localize }}
@@ -24,9 +27,18 @@
             <div class="card">
                 <div class="card-header">
                     <div class="input-group">
-                        
+                        <input type="text"
+                               class="form-control"
+                               name="keyword"
+                               [placeholder]="'SearchWithThreeDot' | localize"
+                               [(ngModel)]="keyword"
+                               (keyup.enter)="getDataPage(1)" />
                         <div class="input-group-append">
-                            
+                            <button type="button"
+                                    class="btn bg-blue"
+                                    (click)="getDataPage(1)">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -37,7 +49,6 @@
                                 <th class="medium text-center">{{ "Application Name" | localize }}</th>
                                 <th class="medium text-center">{{ "Created Date" | localize }}</th>
                                 <th class="medium text-center action-width">{{ "Actions" | localize }}</th>
-                               
                             </tr>
                         </thead>
                         <tbody>
@@ -74,7 +85,6 @@
                                     </button>
 
                                 </td>
-                               
                             </tr>
                         </tbody>
                     </table>

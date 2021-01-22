@@ -42,40 +42,45 @@ namespace CETAutomation.Applications
           
         }
 
-       
 
-        
+
+
 
         /// <summary>
         /// Method for getting all application data
         /// </summary>
+        /// <param name="pageFormatData">GetAllApplicationInput object </param>
         /// <returns>All application data with paged result</returns>
-      
-        public async Task<PagedResultDto<GetApplicationForViewDto>> GetAllAsync()
+
+        public async Task<PagedResultDto<GetApplicationForViewDto>> GetAllAsync(GetAllApplicationInput pageFormatData)
         {
 
-            var ApplicationsList =await _applicationRepository.GetAllListAsync();
-               
-            var applications = from o in ApplicationsList
+            var filteredApplications = _applicationRepository.GetAll()
+                 .WhereIf(!string.IsNullOrWhiteSpace(pageFormatData.Filter), e => false || e.ApplicationName.Trim().ToLower().Contains(pageFormatData.Filter.Trim().ToLower()))
+                .WhereIf(!string.IsNullOrWhiteSpace(pageFormatData.NameFilter), e => false || e.ApplicationName.Trim().ToLower().Contains(pageFormatData.NameFilter.Trim().ToLower())).AsQueryable();
+            var pagedAndFilteredApplications = filteredApplications.OrderBy(pageFormatData.Sorting ?? "id desc")
+                .PageBy(pageFormatData);
+            var applications = from o in pagedAndFilteredApplications
                                select new GetApplicationForViewDto()
                                {
                                    Application = new ApplicationDto
                                    {
                                        ApplicationName = o.ApplicationName,
                                        Id = o.Id,
-                                       ProjectId=o.ProjectId,
+                                       ProjectId = o.ProjectId,
                                        CreationTime = o.CreationTime.ToLocalTime(),
                                    }
                                };
 
-           
-            var totalCount = ApplicationsList.Count();
+
+            var totalCount = await filteredApplications.CountAsync();
 
             return new PagedResultDto<GetApplicationForViewDto>(
                 totalCount,
-                 applications.ToList()
+                 await applications.ToListAsync()
             );
         }
+
 
         /// <summary>
         /// Method for getting application data by ID
